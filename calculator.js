@@ -90,7 +90,7 @@ function Calculator() {
         this.currentInput.forEach(function (val) {
             stringValue = stringValue + val;
         });
-        return parseInt(stringValue).toFixed(0);
+        return parseInt(stringValue);
     };
 
     /*
