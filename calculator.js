@@ -70,15 +70,11 @@ function Calculator() {
     /*
     Pushes the value entered by user (button clicked) into the currentInput array
 
-    ToDo: Add error handling for non-numeric input/operand keys
+    ToDo: Add error handling for non-numeric input/operand keys (really only necessary if keyboard-enabled,
+    but smart to add error handling anyway)
     */
     this.addInput = function (value) {
         this.currentInput.push(value)
-
-        /*
-        ToDo: Display input longer than one digit as a string on the display screen
-        (currently shows as comma-separated values)
-         */
         $('#display').text(this.getCurrentValue());
     };
 
@@ -142,8 +138,8 @@ function Calculator() {
         }
 
         this.currentInput = [calcResult];
-        if (calcResult % 2 !== 0) {
-            calcResult = calcResult.toFixed(2);
+        if (calcResult % 1 !== 0) {
+            calcResult = calcResult.toFixed(3);
         }
         $('#display').text(calcResult);
         return calcResult;
