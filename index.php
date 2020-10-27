@@ -1,3 +1,9 @@
+<?php
+phpinfo();
+    include_once 'dbconnect.class.php';
+    include_once 'test.class.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +50,11 @@
             </div>
 
         </div>
+
+            <?php
+            $testObj = new Test();
+            $testObj->setDate();
+            ?>
 
     </div>
     <script src="get_ip.php" language="javascript" type="text/javascript"></script>
