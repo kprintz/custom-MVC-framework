@@ -7,6 +7,9 @@ class DBConnect
     private $password = "l1lshing";
     private $dbName = "calcdata";
 
+    /**
+     * @return PDO
+     */
     public function connect()
     {
         $dsn = 'mysql:host=' . $this->server . ';dbname=' . $this->dbName;

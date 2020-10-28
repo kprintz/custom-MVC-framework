@@ -142,14 +142,14 @@ function Calculator() {
             calcResult = calcResult.toFixed(3);
         }
         $('#display').text(calcResult);
-        this.getDate();
-        console.log(calcResult);
-        return calcResult;
-    }
 
-    this.getDate = function() {
-        let today = new Date().toLocaleDateString()
-        console.log(today)
+        $.ajax({
+            url: '/calculate.php',
+            context: document.body
+        }).done(function () {
+            console.log('we are done');
+        })
+        return calcResult;
     }
 
     /*
