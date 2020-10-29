@@ -1,7 +1,13 @@
 <?php
 
-class CalculationTable extends DBConnect
+namespace Model;
+
+use DB\Core\DBConnect;
+
+class Calculations extends DBConnect
 {
+    const TABLE_NAME = 'Calculations';
+
     /**
      * @return bool
      */

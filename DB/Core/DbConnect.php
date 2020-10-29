@@ -1,5 +1,9 @@
 <?php
 
+namespace DB\Core;
+
+use \PDO;
+
 class DBConnect
 {
     private $server = "localhost";

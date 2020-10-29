@@ -1,11 +1,11 @@
 <?php
-include_once 'dbconnect.class.php';
-include_once 'calculationtable.class.php';
+include_once 'DB/Core/DbConnect.php';
+include_once 'Model/Calculations.php';
 
 $ip = $_SERVER['REMOTE_ADDR'];
 $today = date("Y-m-d");
 
-$testObj = new CalculationTable();
+$testObj = new \Model\Calculations();
 $testObj->addCalculation($ip, $today, '123456');
 
 //todo look up how to use regex to remove punctuation from IP
