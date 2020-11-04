@@ -1,6 +1,5 @@
 <?php
-include_once 'DB/Core/DbConnect.php';
-include_once 'DB/Core/DbSetupInterface.php';
+include_once 'autoloader.php';
 
 $tableObj = new \DB\Calculations\Setup();
 $tableObj->initialize();

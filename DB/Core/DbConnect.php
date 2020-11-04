@@ -4,7 +4,7 @@ namespace DB\Core;
 
 use \PDO;
 
-class DBConnect
+class DbConnect
 {
     private $server = "localhost";
     private $username = "katherine";

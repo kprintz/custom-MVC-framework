@@ -144,11 +144,11 @@ function Calculator() {
         $('#display').text(calcResult);
 
         $.ajax({
-            url: '/calculate.php',
+            url: '/Calculation/Index/add?input=' + calcResult,
             context: document.body
         }).done(function () {
             console.log('we are done');
-        })
+        });
         return calcResult;
     }
 
