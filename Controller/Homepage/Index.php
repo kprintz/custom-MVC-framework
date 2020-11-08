@@ -9,6 +9,6 @@ class Index
 
     public function execute()
     {
-        return '<div>homepage here</div>';
+        echo include_once 'View/templates/index.phtml';
     }
 }

@@ -144,11 +144,16 @@ function Calculator() {
         $('#display').text(calcResult);
 
         $.ajax({
-            url: '/Calculation/Index/add?input=' + calcResult,
-            context: document.body
-        }).done(function () {
+            //todo fix this
+            type: 'POST',
+            url: '/Calculation/Index/add',
+            data: {
+                'calculation': calcResult,
+            }
+        }).done(function (data, test) {
             console.log('we are done');
         });
+
         return calcResult;
     }
 
