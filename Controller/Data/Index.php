@@ -8,7 +8,13 @@ class Index
 {
     public function execute()
     {
-        return '<div> Show requested data </div>';
+        //todo put in parent class (with router?)
+        ob_start();
+        $beforeBlock = include_once 'View/templates/head.phtml';
+        $afterBlock = include_once 'View/templates/databaseInterface.phtml';
+        $mainBlock = include_once 'View/templates/foot.phtml';
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
     }
-
 }

@@ -34,6 +34,11 @@ class Router
             return $indexRouter->execute();
         }
 
+        if ($this->getFullRoute()[0] === 'Data') {
+            $indexRouter = new \Controller\Data\Index();
+            return $indexRouter->execute();
+        }
+
         $controllerGroup = $this->getFullRoute()[0];
         $controller = $this->getFullRoute()[1];
         $method = $this->getFullRoute()[2];

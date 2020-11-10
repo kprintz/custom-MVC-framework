@@ -21,6 +21,23 @@ class Index extends Calculations
         ]);
     }
 
+    public function getData()
+    {
+        $columnName;
+        $dataPoint;
+
+        $this->getRows('date', '2020-11-04');
+
+        return 'this worked the get data thinsg did';
+    }
+
+    public function getAllData()
+    {
+        $this->getAllCalculations();
+
+        return 'this worked the get data thinsg did';
+    }
+
     public function update()
     {
         $this->updateCalculation('date', '2020-11-04', '2020-11-05');

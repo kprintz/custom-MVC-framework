@@ -1,0 +1,45 @@
+<h1 class="header">Edit Databse</h1>
+
+<div class="edit-window-container">
+
+    <div class="edit-window">
+        <div class="buttons__edit-window__action" id="clickTest">
+            <h3 class="edit-window__header">What do you want to do</h3>
+            <select name="updateType" id="updateTypeID">
+                <option value="getRows">Search By Data Type</option>
+                <option value="getAllData">View All Data</option>
+                <option value="updateData">Update Data</option>
+                <option value="deleteData">Delete Data</option>
+            </select>
+        </div>
+
+        <div class="edit-window__options hide">
+
+            <div class="edit-window__options_columnHeader">
+                <h3 class="edit-window__header">Column Name</h3>
+                <select name="columnName" id="columnID">
+                    <option value="ip">ip</option>
+                    <option value="date">date</option>
+                    <option value="calculation">calculation</option>
+                </select>
+            </div>
+
+            <div class="edit-window__view_delete">
+                <h3 class="edit-window__header">Search Data</h3>
+                <input type="text" name="inputData"><br>
+            </div>
+
+            <div class="edit-window__options__update">
+                <h3 class="edit-window__header">Current Value</h3>
+                <input type="text" name="currentValue"><br>
+
+                <h3 class="edit-window__header">New Value</h3>
+                <input type="text" name="newValue"><br>
+            </div>
+
+        </div>
+
+
+        <input type="submit" value="Submit">
+    </div>
+</div>
