@@ -28,7 +28,6 @@ class Router
      */
     public function getResponse()
     {
-
         if (empty($this->getFullRoute()[0])) {
             $indexRouter = new \Controller\Homepage\Index();
             return $indexRouter->execute();

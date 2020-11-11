@@ -8,7 +8,6 @@ class Index extends Calculations
 {
     public function add()
     {
-        //todo get the request data (post data from JS / ajax)
         $ip = $_SERVER['REMOTE_ADDR'];
         $today = date('Y-m-d');
         //todo put server post info into object
@@ -23,9 +22,6 @@ class Index extends Calculations
 
     public function getData()
     {
-        $columnName;
-        $dataPoint;
-
         $this->getRows('date', '2020-11-04');
 
         return 'this worked the get data thinsg did';
@@ -40,7 +36,7 @@ class Index extends Calculations
 
     public function update()
     {
-        $this->updateCalculation('date', '2020-11-04', '2020-11-05');
+        $this->updateCalculation('date', '2020-11-07', '2020-11-21');
 
         return 'this worked the update thinsg did';
     }

@@ -2,44 +2,48 @@
 
 <div class="edit-window-container">
 
-    <div class="edit-window">
-        <div class="buttons__edit-window__action" id="clickTest">
+    <form data-form="get-data" action="/Calculation/Index/getAllData" method="POST" class="edit-window">
+        <div class="buttons__edit-window__action">
             <h3 class="edit-window__header">What do you want to do</h3>
             <select name="updateType" id="updateTypeID">
-                <option value="getRows">Search By Data Type</option>
-                <option value="getAllData">View All Data</option>
-                <option value="updateData">Update Data</option>
-                <option value="deleteData">Delete Data</option>
+                <option data-show-val="" value="">Select...</option>
+                <option data-show-val="filter" value="getRows">Search By Data Type</option>
+                <option data-show-val="all" value="getAllData">View All Data</option>
+                <option data-show-val="update" value="updateData">Update Data</option>
+                <option data-show-val="delete" value="deleteData">Delete Data</option>
             </select>
         </div>
 
-        <div class="edit-window__options hide">
+        <div class="edit-window__options">
 
-            <div class="edit-window__options_columnHeader">
+            <div class="columnHeader">
                 <h3 class="edit-window__header">Column Name</h3>
-                <select name="columnName" id="columnID">
+                <select name="edit-window__options__columnName" data-visible-for="filter,update,delete">
                     <option value="ip">ip</option>
                     <option value="date">date</option>
                     <option value="calculation">calculation</option>
                 </select>
             </div>
 
-            <div class="edit-window__view_delete">
-                <h3 class="edit-window__header">Search Data</h3>
-                <input type="text" name="inputData"><br>
+            <div class="edit-window__options__view" id="options-view">
+                <div class="view_delete">
+                    <h3 class="edit-window__header">Search Data</h3>
+                    <input type="text" name="inputData" data-visible-for="filter,delete"><br>
+                </div>
+
             </div>
 
-            <div class="edit-window__options__update">
+            <div class="edit-window__options__update" id="options-update">
                 <h3 class="edit-window__header">Current Value</h3>
-                <input type="text" name="currentValue"><br>
+                <input type="text" name="currentValue" data-visible-for="update"><br>
 
                 <h3 class="edit-window__header">New Value</h3>
-                <input type="text" name="newValue"><br>
+                <input type="text" name="newValue" data-visible-for="update"><br>
             </div>
+
 
         </div>
 
-
         <input type="submit" value="Submit">
-    </div>
+    </form>
 </div>
