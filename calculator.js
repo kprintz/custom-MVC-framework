@@ -144,7 +144,6 @@ function Calculator() {
         $('#display').text(calcResult);
 
         $.ajax({
-            //todo fix this
             type: 'POST',
             url: '/Calculation/Index/add',
             data: {

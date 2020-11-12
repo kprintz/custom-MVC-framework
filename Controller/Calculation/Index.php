@@ -15,6 +15,7 @@ class Index extends Calculations
 
         $status = $this->addCalculation($ip, $today, $calculation);
 
+        //todo return json data to functions which will be used through ajax
         return json_encode([
             'estes' => 'seitjhseitj'
         ]);
@@ -22,7 +23,10 @@ class Index extends Calculations
 
     public function getData()
     {
-        $this->getRows('date', '2020-11-04');
+        $column = $_POST['columnName'];
+        $value = $_POST['inputData'];
+
+        $this->getRows($column, $value);
 
         return 'this worked the get data thinsg did';
     }
@@ -36,14 +40,21 @@ class Index extends Calculations
 
     public function update()
     {
-        $this->updateCalculation('date', '2020-11-07', '2020-11-21');
+        $column = $_POST['columnName'];
+        $currentVal = $_POST['currentValue'];
+        $newVal = $_POST['newValue'];
+
+        $this->updateCalculation($column, $currentVal, $newVal);
 
         return 'this worked the update thinsg did';
     }
 
     public function remove()
     {
-        $this->deleteCalculation('calculation', '43110');
+        $column = $_POST['columnName'];
+        $value = $_POST['inputData'];
+
+        $this->deleteCalculation($column, $value);
 
         return 'this worked the remove thinsg did';
     }

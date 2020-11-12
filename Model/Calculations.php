@@ -23,6 +23,7 @@ class Calculations extends DbConnect
 
     public function getRows($column, $value)
     {
+        $returnVal = '';
         if ($column == $this::COL_IP) {
             $sql = 'SELECT * FROM ' . $this::TABLE_NAME . ' WHERE ' . $this::COL_IP . ' = ' . '(INET_ATON(\'' . $value . '\'))';
         } else {
@@ -32,8 +33,9 @@ class Calculations extends DbConnect
         $result = $this->connect()->query($sql);
 
         while ($row = $result->fetch()) {
-            echo $row[$this::COL_IP] . '||' . $row[$this::COL_DATE] . '||' . $row[$this::COL_CALCULATION] . '<br>';
+            $returnVal .= $row[$this::COL_IP] . '||' . $row[$this::COL_DATE] . '||' . $row[$this::COL_CALCULATION] . '<br>';
         }
+        return $returnVal;
     }
 
     /**
@@ -41,6 +43,7 @@ class Calculations extends DbConnect
      */
     public function getAllCalculations()
     {
+        //todo this needs to return something
         $sql = 'SELECT * FROM ' . $this::TABLE_NAME;
         $result = $this->connect()->query($sql);
         while ($row = $result->fetch()) {
