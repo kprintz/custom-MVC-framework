@@ -70,7 +70,7 @@ function Calculator() {
     /*
     Pushes the value entered by user (button clicked) into the currentInput array
 
-    ToDo: Add error handling for non-numeric input/operand keys (really only necessary if keyboard-enabled,
+    ToDo: Add error handling for non-numeric input/operand keys
     but smart to add error handling anyway)
     */
     this.addInput = function (value) {

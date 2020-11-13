@@ -2,12 +2,12 @@
 
 <div class="edit-window-container">
 
-    <form data-form="get-data" action="/Calculation/Index/getAllData" method="POST" class="edit-window">
+    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window">
         <div class="buttons__edit-window__action">
             <h3 class="edit-window__header">What do you want to do</h3>
             <select name="filter" id="filter-options">
                 <option data-show-val="" value="">Select...</option>
-                <option data-show-val="filter" data-method="getData" value="getData">Search By Data Point</option>
+                <option data-show-val="filter" data-method="getData" value="getData">Filter Data</option>
                 <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
                 <option data-show-val="update" data-method="update" value="updateData">Update Data</option>
                 <option data-show-val="delete" data-method="remove" value="deleteData">Delete Data</option>
@@ -18,32 +18,42 @@
 
             <div class="columnHeader">
                 <h3 class="edit-window__header">Column Name</h3>
-                <select name="edit-window__options__columnName" data-visible-for="filter,update,delete" id="columnHeader">
+                <select name="columnName" data-visible-for="filter,update,delete">
                     <option value="ip">IP</option>
                     <option value="date">Date</option>
                     <option value="calculation">Calculation</option>
                 </select>
             </div>
 
-            <div class="edit-window__options__view" id="options-view">
+            <div class="edit-window__options__view">
                 <div class="view_delete">
-                    <h3 class="edit-window__header">Search Data</h3>
-                    <input type="text" name="inputData" id="dataInput" data-visible-for="filter,delete"><br>
+                    <h3 class="edit-window__header">Data Point</h3>
+                    <input type="text" name="inputData" data-visible-for="filter,delete"><br>
                 </div>
 
             </div>
 
-            <div class="edit-window__options__update" id="options-update">
+            <div class="edit-window__options__update">
                 <h3 class="edit-window__header">Current Value</h3>
-                <input type="text" name="currentValue" id="currentVal" data-visible-for="update"><br>
+                <input type="text" name="currentValue" data-visible-for="update"><br>
 
                 <h3 class="edit-window__header">New Value</h3>
-                <input type="text" name="newValue" id="newVal" data-visible-for="update"><br>
+                <input type="text" name="newValue" data-visible-for="update"><br>
             </div>
-
-
         </div>
-
         <input type="submit" value="Submit">
+        <div class="insert-message"></div>
     </form>
+
+    <div class="database-display">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>IP Address</th>
+                <th>Date</th>
+                <th>Calculation</th>
+            </tr>
+
+            <div class="insert-data"></div>
+    </div>
 </div>

@@ -1,9 +1,12 @@
 function DatabaseInterface() {
+    let self = this;
     let option = document.getElementById("filter-options");
     let menu = $('.edit-window__options');
+    let tableDisplay = $('.database-display');
     menu.hide();
+    tableDisplay.hide();
 
-    function displayOptions() {
+    this.displayOptions = function() {
         menu.show();
         let showType = jQuery("#filter-options").find(':selected').attr('data-show-val');
         let $selectedFilter = jQuery('[data-visible-for*="' + showType + '"]');
@@ -16,30 +19,37 @@ function DatabaseInterface() {
 
     }
 
-    jQuery('[data-form="get-data"]').on('submit', function (ev) {
+    this.formSubmitHandler = function(ev) {
         ev.preventDefault();
-
-        let $columnName = $('#columnHeader').val();
-        let $inputData = $('#dataInput').val();
-        let $currentVal = $('#currentVal').val();
-        let $newVal = $('#newVal').val();
+        let formData = jQuery(ev.currentTarget).serializeArray();
         let $method = $('#filter-options').find(':selected').attr('data-method');
 
         jQuery.ajax({
             type: 'POST',
-            url: 'Calculation/Index/' + $method,
-            data: {
-                'columnName': $columnName,
-                'inputData': $inputData,
-                'currentValue': $currentVal,
-                'newValue': $newVal,
-            }
-        }).done(function (data, test, stuff) {
-            console.log('db data sent')
+            //todo make this get the form action - you will need to update the current state of the form action as the user uses the main select field
+            url: jQuery('.edit-window').attr('action') + $method,
+            data: formData,
+        }).done(this.ajaxCompleteHandler);
+    }
+
+    this.ajaxCompleteHandler = function(data) {
+        //todo parse json data here
+        tableDisplay.show();
+        let parsedData = JSON.parse(data);
+        let successMessage = parsedData['successMessage'];
+        let tableHTML = " "
+
+        parsedData['allResults'].forEach(element => {
+            tableHTML += "<tr></tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
 
-    });
-    option.addEventListener("change", displayOptions);
+        $('.insert-message').html(successMessage);
+        $('.insert-data').html(tableHTML);
+        $('.edit-window')[0].reset();
+    }
+
+    jQuery('[data-form="get-data"]').on('submit', this.formSubmitHandler.bind(this));
+    option.addEventListener("change", this.displayOptions);
 }
 
-let databaseInterface = DatabaseInterface();
+let databaseInterface = new DatabaseInterface();

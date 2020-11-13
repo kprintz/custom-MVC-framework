@@ -21,32 +21,28 @@ class Index extends Calculations
         ]);
     }
 
-    public function getData()
-    {
-        $column = $_POST['columnName'];
-        $value = $_POST['inputData'];
-
-        $this->getRows($column, $value);
-
-        return 'this worked the get data thinsg did';
-    }
-
-    public function getAllData()
-    {
-        $this->getAllCalculations();
-
-        return 'this worked the get data thinsg did';
-    }
-
     public function update()
     {
         $column = $_POST['columnName'];
         $currentVal = $_POST['currentValue'];
         $newVal = $_POST['newValue'];
 
-        $this->updateCalculation($column, $currentVal, $newVal);
+        $status = $this->updateCalculation($column, $currentVal, $newVal);
 
-        return 'this worked the update thinsg did';
+        if ($status) {
+            $successMessage = 'All rows where \'' . $column . '\' matches ' . $currentVal . ' have been changed to ' . $newVal;
+        } else if ($status == null) {
+            $successMessage = 'There are no rows where ' . $column . ' equals ' . $currentVal;
+        } else {
+            $successMessage = "Update request not completed";
+        }
+
+        //todo upgrade all to this
+        return json_encode([
+            'updateStatus' => $status,
+            'successMessage' => $successMessage,
+            'allResults' => $this->getAllCalculations()
+        ]);
     }
 
     public function remove()
@@ -56,6 +52,61 @@ class Index extends Calculations
 
         $this->deleteCalculation($column, $value);
 
-        return 'this worked the remove thinsg did';
+        $status = $this->deleteCalculation($column, $value);
+
+        if ($status) {
+            $successMessage = 'All rows where \'' . $column . '\' matches ' . $value . ' have been deleted';
+        } else if ($status == null) {
+            $successMessage = "No matches found";
+        } else {
+            $successMessage = "Delete request not completed";
+        }
+
+        //todo upgrade all to this
+        return json_encode([
+            'updateStatus' => $status,
+            'successMessage' => $successMessage,
+            'allResults' => $this->getAllCalculations()
+        ]);
+    }
+
+    public function getData()
+    {
+        $column = $_POST['columnName'];
+        $value = $_POST['inputData'];
+
+        $status = $this->getRows($column, $value);
+
+        if ($status) {
+            $successMessage = 'Displaying all rows where ' . $column . ' is equal to ' . $value;
+        } else if ($status == null) {
+            $successMessage = "No matches found";
+        } else {
+            $successMessage = "There was an error";
+        }
+
+        return json_encode([
+            'updateStatus' => $status,
+            'successMessage' => $successMessage,
+            'allResults' => $this->getRows($column, $value)
+        ]);
+    }
+
+    public function getAllData()
+    {
+        $status = $this->getAllCalculations();
+
+        if ($status) {
+            $successMessage = 'Displaying all data';
+        } else {
+            $successMessage = "There was an error";
+        }
+
+        //todo upgrade all to this
+        return json_encode([
+            'updateStatus' => $status,
+            'successMessage' => $successMessage,
+            'allResults' => $this->getAllCalculations()
+        ]);
     }
 }
