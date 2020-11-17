@@ -4,7 +4,6 @@ function DatabaseInterface() {
     let menu = $('.edit-window__options');
     let tableDisplay = $('.database-display');
     menu.hide();
-    tableDisplay.hide();
 
     this.displayOptions = function() {
         menu.show();
@@ -33,18 +32,17 @@ function DatabaseInterface() {
     }
 
     this.ajaxCompleteHandler = function(data) {
-        //todo parse json data here
         tableDisplay.show();
         let parsedData = JSON.parse(data);
         let successMessage = parsedData['successMessage'];
         let tableHTML = " "
 
         parsedData['allResults'].forEach(element => {
-            tableHTML += "<tr></tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+            tableHTML += "<tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
 
         $('.insert-message').html(successMessage);
-        $('.insert-data').html(tableHTML);
+        $('.table-headers').after(tableHTML);
         $('.edit-window')[0].reset();
     }
 

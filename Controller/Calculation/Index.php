@@ -2,111 +2,118 @@
 
 namespace Controller\Calculation;
 
-use Model\Calculations;
+use Model\Resource\CalculationsResource;
+use Model\CalculationsData;
 
-class Index extends Calculations
+class Index
 {
     public function add()
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $today = date('Y-m-d');
-        //todo put server post info into object
-        $calculation = (int)$_POST['calculation'];
+        $postData = new CalculationsData();
+        $postData->setIP();
+        $postData->setDate();
+        $postData->setData($_POST);
 
-        $status = $this->addCalculation($ip, $today, $calculation);
+        /** @var CalculationsResource $calculationModel */
+        $calculationResource = new CalculationsResource();
+        $calculationModel = $calculationResource->addCalculation($postData->getIP(), $postData->getDate(), $postData->getCalculation());
 
-        //todo return json data to functions which will be used through ajax
+        if ($calculationModel->getStatus()) {
+            $successMessage = 'New row added. Calculation: ' . $postData->getCalculation() . ' Date: ' . $postData->getDate() . ' IP Address: ' . $postData->getIP();
+        } else {
+            $successMessage = "Data not added";
+        }
+
         return json_encode([
-            'estes' => 'seitjhseitj'
+            'updateStatus' => $calculationModel->getStatus(),
+            'successMessage' => $successMessage,
+            'allResults' => $calculationModel->getRows()
         ]);
     }
 
     public function update()
     {
-        $column = $_POST['columnName'];
-        $currentVal = $_POST['currentValue'];
-        $newVal = $_POST['newValue'];
+        //todo turn this into a class/interface or something
+        $postData = new CalculationsData();
+        $postData->setData($_POST);
 
-        $status = $this->updateCalculation($column, $currentVal, $newVal);
+        $calculationResource = new CalculationsResource();
+        $calculationModel = $calculationResource->updateCalculation($postData->getColumn(), $postData->getCurrentValue(), $postData->getNewValue());
 
-        if ($status) {
-            $successMessage = 'All rows where \'' . $column . '\' matches ' . $currentVal . ' have been changed to ' . $newVal;
-        } else if ($status == null) {
-            $successMessage = 'There are no rows where ' . $column . ' equals ' . $currentVal;
+        if ($calculationModel->getStatus()) {
+            $successMessage = 'All rows where \'' . $postData->getColumn() . '\' matches ' . $postData->getCurrentValue() . ' have been changed to ' . $postData->getNewValue();
         } else {
             $successMessage = "Update request not completed";
         }
 
-        //todo upgrade all to this
         return json_encode([
-            'updateStatus' => $status,
+            'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $this->getAllCalculations()
+            'allResults' => $calculationModel->getRows()
         ]);
     }
+
 
     public function remove()
     {
-        $column = $_POST['columnName'];
-        $value = $_POST['inputData'];
+        $postData = new CalculationsData();
+        $postData->setData($_POST);
 
-        $this->deleteCalculation($column, $value);
+        /** @var CalculationsResource $dbData */
+        $calculationResource = new CalculationsResource();
+        $calculationModel = $calculationResource->deleteCalculation($postData->getColumn(), $postData->getCalculation());
 
-        $status = $this->deleteCalculation($column, $value);
-
-        if ($status) {
-            $successMessage = 'All rows where \'' . $column . '\' matches ' . $value . ' have been deleted';
-        } else if ($status == null) {
-            $successMessage = "No matches found";
+        if ($calculationModel->getStatus()) {
+            $successMessage = 'All rows where \'' . $postData->getColumn() . '\' matches ' . $postData->getCalculation() . ' have been deleted';
         } else {
-            $successMessage = "Delete request not completed";
+            $successMessage = "Update request not completed";
         }
 
-        //todo upgrade all to this
         return json_encode([
-            'updateStatus' => $status,
+            'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $this->getAllCalculations()
+            'allResults' => $calculationModel->getRows()
         ]);
     }
 
-    public function getData()
+    public function getFilterData()
     {
-        $column = $_POST['columnName'];
-        $value = $_POST['inputData'];
+        $postData = new CalculationsData();
+        $postData->setData($_POST);
 
-        $status = $this->getRows($column, $value);
+        /** @var CalculationsResource $dbData */
+        $calculationResource = new CalculationsResource();
+        $calculationModel = $calculationResource->getFilteredRows($postData->getColumn(), $postData->getCalculation());
 
-        if ($status) {
-            $successMessage = 'Displaying all rows where ' . $column . ' is equal to ' . $value;
-        } else if ($status == null) {
-            $successMessage = "No matches found";
+        if ($calculationModel->getStatus()) {
+            $successMessage = 'Displaying all rows where \'' . $postData->getColumn() . '\' is ' . $postData->getCalculation();
         } else {
             $successMessage = "There was an error";
         }
 
         return json_encode([
-            'updateStatus' => $status,
+            'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $this->getRows($column, $value)
+            'allResults' => $calculationModel->getRows()
         ]);
     }
 
     public function getAllData()
     {
-        $status = $this->getAllCalculations();
+        /** @var CalculationsResource $dbData */
+        $calculationResource = new CalculationsResource();
+        $calculationModel = $calculationResource->getAllCalculations();
 
-        if ($status) {
+        if ($calculationModel->getStatus()) {
             $successMessage = 'Displaying all data';
         } else {
             $successMessage = "There was an error";
         }
 
-        //todo upgrade all to this
         return json_encode([
-            'updateStatus' => $status,
+            'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $this->getAllCalculations()
+            'allResults' => $calculationModel->getRows()
         ]);
     }
 }

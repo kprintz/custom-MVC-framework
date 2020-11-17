@@ -4,41 +4,46 @@
 
     <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window">
         <div class="buttons__edit-window__action">
-            <h3 class="edit-window__header">What do you want to do</h3>
+            <label for="filter-options">What do you want to do</label>
             <select name="filter" id="filter-options">
                 <option data-show-val="" value="">Select...</option>
-                <option data-show-val="filter" data-method="getData" value="getData">Filter Data</option>
-                <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
+                <option data-show-val="add" data-method="add" value="add">Add Data</option>
                 <option data-show-val="update" data-method="update" value="updateData">Update Data</option>
                 <option data-show-val="delete" data-method="remove" value="deleteData">Delete Data</option>
+                <option data-show-val="filter" data-method="getFilterData" value="getFilterData">Filter Data</option>
+                <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
             </select>
         </div>
 
         <div class="edit-window__options">
 
             <div class="columnHeader">
-                <h3 class="edit-window__header">Column Name</h3>
-                <select name="columnName" data-visible-for="filter,update,delete">
-                    <option value="ip">IP</option>
-                    <option value="date">Date</option>
-                    <option value="calculation">Calculation</option>
-                </select>
+                <label for="columnName">Column Name
+                    <select name="columnName" data-visible-for="update,delete,filter">
+                        <option value="ip">IP</option>
+                        <option value="date">Date</option>
+                        <option value="calculation">Calculation</option>
+                    </select>
+                </label>
             </div>
 
             <div class="edit-window__options__view">
                 <div class="view_delete">
-                    <h3 class="edit-window__header">Data Point</h3>
-                    <input type="text" name="inputData" data-visible-for="filter,delete"><br>
+                    <label for="calculation">Data Point
+                        <input type="text" name="calculation" data-visible-for="add,delete,filter">
+                    </label>
                 </div>
 
             </div>
 
             <div class="edit-window__options__update">
-                <h3 class="edit-window__header">Current Value</h3>
-                <input type="text" name="currentValue" data-visible-for="update"><br>
+                <label for="currentValue">Current Value
+                    <input type="text" name="currentValue" data-visible-for="update">
+                </label>
 
-                <h3 class="edit-window__header">New Value</h3>
-                <input type="text" name="newValue" data-visible-for="update"><br>
+                <label for="newValue">New Value
+                    <input type="text" name="newValue" data-visible-for="update">
+                </label>
             </div>
         </div>
         <input type="submit" value="Submit">
@@ -47,13 +52,13 @@
 
     <div class="database-display">
         <table>
-            <tr>
+            <tr class="table-headers">
+                <!-- todo change this so it is pulled from the column names -->
                 <th>ID</th>
                 <th>IP Address</th>
                 <th>Date</th>
                 <th>Calculation</th>
             </tr>
-
-            <div class="insert-data"></div>
+        </table>
     </div>
 </div>

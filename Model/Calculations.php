@@ -1,68 +1,45 @@
 <?php
 
+
 namespace Model;
 
-use DB\Core\DbConnect;
 
-class Calculations extends DbConnect
+class Calculations
 {
-    const TABLE_NAME = 'Calculations';
-    const COL_IP = 'ip';
-    const COL_DATE = 'date';
-    const COL_CALCULATION = 'calculation';
+    private string $status;
 
-    /**
-     * @return bool
-     */
-    public function addCalculation($ip, $date, $calculation)
+    /** @var array */
+    private array $rows = [];
+
+    public function setStatus($status)
     {
-        $sql = 'INSERT INTO ' . $this::TABLE_NAME . ' (' . $this::COL_IP . ', ' . $this::COL_DATE . ', ' . $this::COL_CALCULATION . ') VALUES (?,?,?)';
-        $stmt = $this->connect()->prepare($sql);
-        return $stmt->execute([$ip, $date, $calculation]);
+        $this->status = $status;
+        return $this;
     }
 
-    public function updateCalculation($column = 'calculation', $currentValue = null, $newValue = null)
+    public function setRows($rows)
     {
-        $sql = 'UPDATE ' . $this::TABLE_NAME . ' SET ' . $column . ' = \'' . $newValue . '\'  WHERE ' . $column . ' = \'' . $currentValue . '\'';
-        $stmt = $this->connect()->prepare($sql);
-        return $stmt->execute();
-    }
-
-    public function deleteCalculation($column, $value = null)
-    {
-        $sql = 'DELETE FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
-        $stmt = $this->connect()->prepare($sql);
-        return $stmt->execute();
-    }
-
-    public function getRows($column, $value)
-    {
-        $output = [];
-
-        $sql = 'SELECT * FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
-
-        $result = $this->connect()->query($sql);
-
-        while ($row = $result->fetch()) {
-            $output[] = $row;
-        }
-        return $output;
+        $this->rows = $rows;
+        return $this;
     }
 
     /**
-     * @return array
+     * @param $row array
+     * @return $this
      */
-    public function getAllCalculations()
+    public function addRow($row)
     {
-        $output = [];
-        $sql = 'SELECT * FROM ' . $this::TABLE_NAME;
+        $this->rows[] = $row;
+        return $this;
+    }
 
-        $result = $this->connect()->query($sql);
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-        while ($row = $result->fetch()) {
-            $output[] = $row;
-        }
-
-        return $output;
+    public function getRows()
+    {
+        return $this->rows;
     }
 }
