@@ -7,20 +7,19 @@ class Router
     /** @var string $request */
     private $request;
 
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = new \Model\Request();
     }
 
     public function getFullRoute()
     {
-
-        $requestArray = explode('/', $this->request);
+        //todo make sure always returns parts - or make specific parts into sub functions
+        $requestArray = explode('/', $this->request->getUri());
         $requestArray = array_filter($requestArray);
         $requestArray = array_values($requestArray);
 
         return $requestArray;
-
     }
 
     /**
@@ -30,11 +29,6 @@ class Router
     {
         if (empty($this->getFullRoute()[0])) {
             $indexRouter = new \Controller\Homepage\Index();
-            return $indexRouter->execute();
-        }
-
-        if ($this->getFullRoute()[0] === 'Data') {
-            $indexRouter = new \Controller\Data\Index();
             return $indexRouter->execute();
         }
 

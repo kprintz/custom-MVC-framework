@@ -1,9 +1,9 @@
 <h1 class="header">Edit Databse</h1>
 
-<div class="edit-window-container">
+<div class="edit-window edit-window-container">
 
-    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window">
-        <div class="buttons__edit-window__action">
+    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window edit-window__form" id="edit-form-reset">
+        <div class="edit-window__action">
             <label for="filter-options">What do you want to do</label>
             <select name="filter" id="filter-options">
                 <option data-show-val="" value="">Select...</option>
@@ -15,9 +15,9 @@
             </select>
         </div>
 
-        <div class="edit-window__options">
+        <div class="edit-window__filters">
 
-            <div class="columnHeader">
+            <div class="edit-window__filters_options">
                 <label for="columnName">Column Name
                     <select name="columnName" data-visible-for="update,delete,filter">
                         <option value="ip">IP</option>
@@ -27,7 +27,7 @@
                 </label>
             </div>
 
-            <div class="edit-window__options__view">
+            <div class="edit-window__filters_options">
                 <div class="view_delete">
                     <label for="calculation">Data Point
                         <input type="text" name="calculation" data-visible-for="add,delete,filter">
@@ -36,7 +36,7 @@
 
             </div>
 
-            <div class="edit-window__options__update">
+            <div class="edit-window__filters_options">
                 <label for="currentValue">Current Value
                     <input type="text" name="currentValue" data-visible-for="update">
                 </label>
@@ -46,12 +46,17 @@
                 </label>
             </div>
         </div>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="buttons buttons__admin">
         <div class="insert-message"></div>
     </form>
 
-    <div class="database-display">
+    <div class="database-display edit-window edit-window__form">
         <table>
+            <?php
+
+
+
+            ?>
             <tr class="table-headers">
                 <!-- todo change this so it is pulled from the column names -->
                 <th>ID</th>
@@ -60,5 +65,6 @@
                 <th>Calculation</th>
             </tr>
         </table>
+
     </div>
 </div>

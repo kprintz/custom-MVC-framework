@@ -1,7 +1,7 @@
 function DatabaseInterface() {
     let self = this;
     let option = document.getElementById("filter-options");
-    let menu = $('.edit-window__options');
+    let menu = $('.edit-window__filters');
     let tableDisplay = $('.database-display');
     menu.hide();
 
@@ -26,7 +26,7 @@ function DatabaseInterface() {
         jQuery.ajax({
             type: 'POST',
             //todo make this get the form action - you will need to update the current state of the form action as the user uses the main select field
-            url: jQuery('.edit-window').attr('action') + $method,
+            url: jQuery('#edit-form-reset').attr('action') + $method,
             data: formData,
         }).done(this.ajaxCompleteHandler);
     }
@@ -43,7 +43,7 @@ function DatabaseInterface() {
 
         $('.insert-message').html(successMessage);
         $('.table-headers').after(tableHTML);
-        $('.edit-window')[0].reset();
+        $('#edit-form-reset')[0].reset();
     }
 
     jQuery('[data-form="get-data"]').on('submit', this.formSubmitHandler.bind(this));

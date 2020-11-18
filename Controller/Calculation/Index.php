@@ -2,24 +2,19 @@
 
 namespace Controller\Calculation;
 
+use Controller\Core\ControllerAbstract;
 use Model\Resource\CalculationsResource;
-use Model\CalculationsData;
 
-class Index
+class Index extends ControllerAbstract
 {
     public function add()
     {
-        $postData = new CalculationsData();
-        $postData->setIP();
-        $postData->setDate();
-        $postData->setData($_POST);
-
         /** @var CalculationsResource $calculationModel */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->addCalculation($postData->getIP(), $postData->getDate(), $postData->getCalculation());
+        $calculationModel = $calculationResource->addCalculation($this->getRequest()->getIP(), $this->getRequest()->getDate(), $this->getRequest()->getPostData('calculation'));
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'New row added. Calculation: ' . $postData->getCalculation() . ' Date: ' . $postData->getDate() . ' IP Address: ' . $postData->getIP();
+            $successMessage = 'New row added. Calculation: ' . $this->getRequest()->getPostData('calculation') . ' Date: ' . $this->getRequest()->getDate() . ' IP Address: ' . $this->getRequest()->getIP();
         } else {
             $successMessage = "Data not added";
         }
@@ -33,15 +28,12 @@ class Index
 
     public function update()
     {
-        //todo turn this into a class/interface or something
-        $postData = new CalculationsData();
-        $postData->setData($_POST);
-
+        /** @var CalculationsResource $calculationModel */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->updateCalculation($postData->getColumn(), $postData->getCurrentValue(), $postData->getNewValue());
+        $calculationModel = $calculationResource->updateCalculation($this->getRequest()->getPostData('columnName'), $this->getRequest()->getPostData('currentValue'), $this->getRequest()->getPostData('newValue'));
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'All rows where \'' . $postData->getColumn() . '\' matches ' . $postData->getCurrentValue() . ' have been changed to ' . $postData->getNewValue();
+            $successMessage = 'All rows where \'' . $this->getRequest()->getPostData('columnName') . '\' matches ' . $this->getRequest()->getPostData('currentValue') . ' have been changed to ' . $this->getRequest()->getPostData('newValue');
         } else {
             $successMessage = "Update request not completed";
         }
@@ -56,15 +48,16 @@ class Index
 
     public function remove()
     {
-        $postData = new CalculationsData();
-        $postData->setData($_POST);
-
         /** @var CalculationsResource $dbData */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->deleteCalculation($postData->getColumn(), $postData->getCalculation());
+        $calculationModel = $calculationResource->deleteCalculation(
+            $this->getRequest()->getPostData('columnName'),
+            $this->getRequest()->getPostData('calculation')
+        );
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'All rows where \'' . $postData->getColumn() . '\' matches ' . $postData->getCalculation() . ' have been deleted';
+            $successMessage = 'All rows where \'' . $this->getRequest()->getPostData('columnName') . '\' matches '
+                . $this->getRequest()->getPostData('calculation') . ' have been deleted';
         } else {
             $successMessage = "Update request not completed";
         }
@@ -72,21 +65,19 @@ class Index
         return json_encode([
             'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows()
+            'allResults' => $calculationModel->getRows(),
+            //'rowsModified' => $calculationResource->getRowsChanged()
         ]);
     }
 
     public function getFilterData()
     {
-        $postData = new CalculationsData();
-        $postData->setData($_POST);
-
         /** @var CalculationsResource $dbData */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->getFilteredRows($postData->getColumn(), $postData->getCalculation());
+        $calculationModel = $calculationResource->getFilteredRows($this->getRequest()->getPostData('columnName'), $this->getRequest()->getPostData('calculation'));
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'Displaying all rows where \'' . $postData->getColumn() . '\' is ' . $postData->getCalculation();
+            $successMessage = 'Displaying all rows where \'' . $this->getRequest()->getPostData('columnName') . '\' is ' . $this->getRequest()->getPostData('calculation');
         } else {
             $successMessage = "There was an error";
         }
@@ -117,3 +108,4 @@ class Index
         ]);
     }
 }
+

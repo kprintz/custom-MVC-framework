@@ -95,7 +95,6 @@ html {
 
         &:hover {
             font-weight: 900;
-            //font-size: 3rem;
             box-shadow: none;
             cursor: pointer;
         }
@@ -103,23 +102,48 @@ html {
         &__clear {
             background-image: linear-gradient(to right, #ed945c, #f06711);
         }
-
+    }
+    &__admin {
+        width: 150px;
+        height: 50px;
+        margin: 20px auto;
+        font-size: 1.5rem;
+        border: 3px solid white;
+        border-radius: 3%;
+        box-shadow: 2px -2px white;
+        background-image: linear-gradient(to right, #e8436a , #9534eb);
     }
 }
 
 .edit-window {
     border: 5px solid white;
-    margin: 50px;
-    padding: 25px;
-    &__options {
+    margin: 20px;
+    padding: 20px;
 
+    &__container {
+        border: 5px solid white;
+        margin: 50px;
+        padding: 25px;
+    }
+
+    &__action{
+        font-size: 1.5rem;
+        padding: 10px;
+        text-align: center;
+    }
+
+    &__filters {
+        font-size: 1rem;
+        padding: 10px;
+
+        &_options {
+            font-size: 1rem;
+            padding: 5px 0;
+        }
     }
 }
 
 .database-display {
-    border: 5px solid white;
-    margin: 50px;
-    padding: 25px;
     text-align: center;
 }
 

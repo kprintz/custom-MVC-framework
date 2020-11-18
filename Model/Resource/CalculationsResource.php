@@ -30,6 +30,12 @@ class CalculationsResource extends DbConnect
         return $dbData;
     }
 
+    /**
+     * @param string $column
+     * @param null $currentValue
+     * @param null $newValue
+     * @return Calculations
+     */
     public function updateCalculation($column = 'calculation', $currentValue = null, $newValue = null)
     {
         $sql = 'UPDATE ' . $this::TABLE_NAME . ' SET ' . $column . ' = \'' . $newValue . '\'  WHERE ' . $column . ' = \'' . $currentValue . '\'';
@@ -42,6 +48,11 @@ class CalculationsResource extends DbConnect
         return $dbData;
     }
 
+    /**
+     * @param $column
+     * @param null $value
+     * @return Calculations
+     */
     public function deleteCalculation($column, $value = null)
     {
         $sql = 'DELETE FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
@@ -50,10 +61,18 @@ class CalculationsResource extends DbConnect
         $dbData = new Calculations();
         $dbData->setStatus($stmt->execute());
         $dbData->addRow([]);
+        //todo implement row counts on resource
+        //todo this data should be on a parent class (common to all resource models)
+        //$this->rowsChanged = $stmt->rowCount();
 
         return $dbData;
     }
 
+    /**
+     * @param $column
+     * @param $value
+     * @return Calculations
+     */
     public function getFilteredRows($column, $value)
     {
         $sql = 'SELECT * FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
