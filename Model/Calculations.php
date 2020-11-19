@@ -6,20 +6,20 @@ namespace Model;
 
 class Calculations
 {
+    //todo we can look at this together later (should auto serialize when we are asking this instantiated Class to turn into an array)
+    public function __serialize(): array
+    {
+        return $this->getRow();
+    }
+
     private string $status;
 
     /** @var array */
-    private array $rows = [];
+    private array $row;
 
     public function setStatus($status)
     {
         $this->status = $status;
-        return $this;
-    }
-
-    public function setRows($rows)
-    {
-        $this->rows = $rows;
         return $this;
     }
 
@@ -29,7 +29,7 @@ class Calculations
      */
     public function addRow($row)
     {
-        $this->rows[] = $row;
+        $this->row = $row;
         return $this;
     }
 
@@ -38,8 +38,16 @@ class Calculations
         return $this->status;
     }
 
-    public function getRows()
+    public function getRow()
     {
-        return $this->rows;
+        return $this->row;
+    }
+
+    public function getData($key)
+    {
+        if (array_key_exists($key, $this->row)) {
+            return $this->row[$key];
+        }
+        return '';
     }
 }

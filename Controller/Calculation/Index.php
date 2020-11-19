@@ -11,10 +11,14 @@ class Index extends ControllerAbstract
     {
         /** @var CalculationsResource $calculationModel */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->addCalculation($this->getRequest()->getIP(), $this->getRequest()->getDate(), $this->getRequest()->getPostData('calculation'));
+        $calculationModel = $calculationResource->add([
+            $calculationResource->COL_IP => $this->getRequest()->getIP(),
+            $calculationResource->COL_DATE => $this->getRequest()->getDate(),
+            $calculationResource->COL_CALCULATION => $this->getRequest()->getPostData('calculation')
+        ]);
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'New row added. Calculation: ' . $this->getRequest()->getPostData('calculation') . ' Date: ' . $this->getRequest()->getDate() . ' IP Address: ' . $this->getRequest()->getIP();
+            $successMessage = 'New row added. Calculation: ' . $calculationModel->getRow() . ' Date: ' . $calculationModel->getData($calculationResource->COL_DATE) . ' IP Address: ' . $calculationModel->getData($calculationResource->COL_IP);
         } else {
             $successMessage = "Data not added";
         }
@@ -22,7 +26,8 @@ class Index extends ControllerAbstract
         return json_encode([
             'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows()
+            'allResults' => 'fix me', //todo needs to return all the table data
+            'rowsModified' => $calculationResource->getNumberRowsLastUpdated()
         ]);
     }
 
@@ -30,10 +35,15 @@ class Index extends ControllerAbstract
     {
         /** @var CalculationsResource $calculationModel */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->updateCalculation($this->getRequest()->getPostData('columnName'), $this->getRequest()->getPostData('currentValue'), $this->getRequest()->getPostData('newValue'));
+        //todo - improve key name retrieval
+        $calculationModel = $calculationResource->update([
+            'columnName' => $this->getRequest()->getPostData('columnName'),
+            'currentValue' => $this->getRequest()->getPostData('currentValue'),
+            'newValue'=> $this->getRequest()->getPostData('newValue')
+        ]);
 
         if ($calculationModel->getStatus()) {
-            $successMessage = 'All rows where \'' . $this->getRequest()->getPostData('columnName') . '\' matches ' . $this->getRequest()->getPostData('currentValue') . ' have been changed to ' . $this->getRequest()->getPostData('newValue');
+            $successMessage = 'All rows where \'' . $calculationModel->getData('columnName') . '\' matches ' . $calculationModel->getData('currentValue') . ' have been changed to ' . $calculationModel->getData('newValue');
         } else {
             $successMessage = "Update request not completed";
         }
@@ -41,51 +51,48 @@ class Index extends ControllerAbstract
         return json_encode([
             'updateStatus' => $calculationModel->getStatus(),
             'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows()
+            'allResults' => 'fix me', //todo needs to return all the table data
+            'rowsModified' => $calculationResource->getNumberRowsLastUpdated()
         ]);
     }
 
 
-    public function remove()
+    public function delete()
     {
-        /** @var CalculationsResource $dbData */
+        /** @var CalculationsResource $calculationModel */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->deleteCalculation(
-            $this->getRequest()->getPostData('columnName'),
-            $this->getRequest()->getPostData('calculation')
-        );
-
-        if ($calculationModel->getStatus()) {
-            $successMessage = 'All rows where \'' . $this->getRequest()->getPostData('columnName') . '\' matches '
-                . $this->getRequest()->getPostData('calculation') . ' have been deleted';
-        } else {
-            $successMessage = "Update request not completed";
-        }
+        //todo - improve key name retrieval
+        $calculationModel = $calculationResource->delete([
+            'columnName' => $this->getRequest()->getPostData('columnName'),
+            'calculation' => $this->getRequest()->getPostData('calculation')
+        ]);
 
         return json_encode([
-            'updateStatus' => $calculationModel->getStatus(),
-            'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows(),
-            //'rowsModified' => $calculationResource->getRowsChanged()
+            'updateStatus' => '', //todo - figure out what to do with this
+            'rowsUpdated' => $calculationModel->getStatus() . ' rows deleted',
+            'allResults' => 'fix me',//todo needs to return all the table data
+            'rowsModified' => $calculationResource->getNumberRowsLastUpdated()
         ]);
     }
 
-    public function getFilterData()
+    public function filter()
     {
         /** @var CalculationsResource $dbData */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->getFilteredRows($this->getRequest()->getPostData('columnName'), $this->getRequest()->getPostData('calculation'));
+        $calculationModels = $calculationResource->filter([
+            'columnName' => $this->getRequest()->getPostData('columnName'),
+            'calculation' => $this->getRequest()->getPostData('calculation')
+        ]);
 
-        if ($calculationModel->getStatus()) {
-            $successMessage = 'Displaying all rows where \'' . $this->getRequest()->getPostData('columnName') . '\' is ' . $this->getRequest()->getPostData('calculation');
-        } else {
-            $successMessage = "There was an error";
+        $calcJsonData = [];
+        foreach ($calculationModels as $calculationModel) {
+            $calcJsonData[] = $calculationModel->getRow();
         }
 
         return json_encode([
-            'updateStatus' => $calculationModel->getStatus(),
-            'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows()
+            'successMessage' => 'Displaying filtered data',
+            'allResults' => $calcJsonData,
+            'rowsModified' => $calculationResource->getNumberRowsLastUpdated()
         ]);
     }
 
@@ -93,18 +100,17 @@ class Index extends ControllerAbstract
     {
         /** @var CalculationsResource $dbData */
         $calculationResource = new CalculationsResource();
-        $calculationModel = $calculationResource->getAllCalculations();
+        $calculationModels = $calculationResource->getAllData();
 
-        if ($calculationModel->getStatus()) {
-            $successMessage = 'Displaying all data';
-        } else {
-            $successMessage = "There was an error";
+        $calcJsonData = [];
+        foreach ($calculationModels as $calculationModel) {
+            $calcJsonData[] = $calculationModel->getRow();
         }
 
         return json_encode([
-            'updateStatus' => $calculationModel->getStatus(),
-            'successMessage' => $successMessage,
-            'allResults' => $calculationModel->getRows()
+            'updateStatus' => $calculationResource->getNumberRowsLastUpdated(),
+            'successMessage' => 'Displaying all data',
+            'allResults' => $calcJsonData
         ]);
     }
 }

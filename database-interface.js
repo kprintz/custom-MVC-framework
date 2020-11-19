@@ -18,6 +18,14 @@ function DatabaseInterface() {
 
     }
 
+    this.pageDisplay = function() {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Calculation/Index/getAllData',
+            data: 'test',
+        }).done(this.ajaxCompleteHandler);
+    }
+
     this.formSubmitHandler = function(ev) {
         ev.preventDefault();
         let formData = jQuery(ev.currentTarget).serializeArray();
@@ -34,18 +42,19 @@ function DatabaseInterface() {
     this.ajaxCompleteHandler = function(data) {
         tableDisplay.show();
         let parsedData = JSON.parse(data);
-        let successMessage = parsedData['successMessage'];
+        let rowsUpdated = parsedData['rowsUpdated'];
         let tableHTML = " "
 
         parsedData['allResults'].forEach(element => {
             tableHTML += "<tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
 
-        $('.insert-message').html(successMessage);
+        $('.insert-message').html(rowsUpdated);
         $('.table-headers').after(tableHTML);
         $('#edit-form-reset')[0].reset();
     }
 
+    jQuery(document).ready(this.pageDisplay);
     jQuery('[data-form="get-data"]').on('submit', this.formSubmitHandler.bind(this));
     option.addEventListener("change", this.displayOptions);
 }

@@ -5,99 +5,89 @@ namespace Model\Resource;
 use DB\Core\DbConnect;
 use Model\Calculations;
 
-class CalculationsResource extends DbConnect
+class CalculationsResource extends AbstractResource
 {
-    const TABLE_NAME = 'Calculations';
-    const COL_IP = 'ip';
-    const COL_DATE = 'date';
-    const COL_CALCULATION = 'calculation';
+    public string $TABLE_NAME = 'Calculations';
+    public string $COL_IP = 'ip';
+    public string $COL_DATE = 'date';
+    public string $COL_CALCULATION = 'calculation';
 
     /**
-     * @param $ip
-     * @param $date
-     * @param $calculation
+     * @param array $assocData
      * @return Calculations
      */
-    public function addCalculation($ip, $date, $calculation)
+    public function add(array $assocData)
     {
-        $sql = 'INSERT INTO ' . $this::TABLE_NAME . ' (' . $this::COL_IP . ', ' . $this::COL_DATE . ', ' . $this::COL_CALCULATION . ') VALUES (?,?,?)';
-        $stmt = $this->connect()->prepare($sql);
+        $statement = parent::add($assocData);
+        $calcModel = new Calculations();
+        $calcModel->setStatus($this->rowsUpdated);
+        $calcModel->addRow($assocData);
 
-        $dbData = new Calculations();
-        $dbData->setStatus($stmt->execute([$ip, $date, $calculation]));
-        $dbData->addRow([]);
-
-        return $dbData;
+        return $calcModel;
     }
 
     /**
-     * @param string $column
-     * @param null $currentValue
-     * @param null $newValue
+     * @param array $assocData
      * @return Calculations
      */
-    public function updateCalculation($column = 'calculation', $currentValue = null, $newValue = null)
+    public function update(array $assocData)
     {
-        $sql = 'UPDATE ' . $this::TABLE_NAME . ' SET ' . $column . ' = \'' . $newValue . '\'  WHERE ' . $column . ' = \'' . $currentValue . '\'';
-        $stmt = $this->connect()->prepare($sql);
+        $statement = parent::update($assocData);
+        $calcModel = new Calculations();
+        $calcModel->setStatus($this->rowsUpdated);
+        $calcModel->addRow($assocData);
 
-        $dbData = new Calculations();
-        $dbData->setStatus($stmt->execute());
-        $dbData->addRow([]);
-
-        return $dbData;
+        return $calcModel;
     }
 
     /**
-     * @param $column
-     * @param null $value
+     * @param array $assocData
      * @return Calculations
      */
-    public function deleteCalculation($column, $value = null)
+    public function delete(array $assocData)
     {
-        $sql = 'DELETE FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
-        $stmt = $this->connect()->prepare($sql);
+        $statement = parent::delete($assocData);
+        $calcModel = new Calculations();
+        $calcModel->setStatus($this->rowsUpdated);
+        $calcModel->addRow($assocData);
 
-        $dbData = new Calculations();
-        $dbData->setStatus($stmt->execute());
-        $dbData->addRow([]);
-        //todo implement row counts on resource
-        //todo this data should be on a parent class (common to all resource models)
-        //$this->rowsChanged = $stmt->rowCount();
-
-        return $dbData;
+        return $calcModel;
     }
 
     /**
-     * @param $column
-     * @param $value
-     * @return Calculations
+     * @param array $assocData
+     * @return array
      */
-    public function getFilteredRows($column, $value)
+    public function filter(array $assocData)
     {
-        $sql = 'SELECT * FROM ' . $this::TABLE_NAME . ' WHERE ' . $column . ' = \'' . $value . '\'';
+        $statement = parent::filter($assocData);
+        $calcModel = new Calculations();
+        $calcModel->setStatus($this->rowsUpdated);
 
-        $stmt = $this->connect()->prepare($sql);
-
-        $dbData = new Calculations();
-        $dbData->setStatus($stmt->execute());
-        while ($row = $stmt->fetch()) {
-            $dbData->addRow($row);
+        $calcModels = [];
+        while ($row = $statement->fetch()) {
+            $calcModel = new Calculations();
+            $calcModel->addRow($row);
+            $calcModels[] = $calcModel;
         }
-        return $dbData;
+        return $calcModels;
     }
 
-    public function getAllCalculations()
+    /**
+     * @return Calculations[]
+     */
+    public function getAllData()
     {
-        $sql = 'SELECT * FROM ' . $this::TABLE_NAME;
+        $statement = parent::getAllData();
+        $calcModel = new Calculations();
+        $calcModel->setStatus($this->rowsUpdated);
 
-        $stmt = $this->connect()->prepare($sql);
-
-        $dbData = new Calculations();
-        $dbData->setStatus($stmt->execute());
-        while ($row = $stmt->fetch()) {
-            $dbData->addRow($row);
+        $calcModels = [];
+        while ($row = $statement->fetch()) {
+            $calcModel = new Calculations();
+            $calcModel->addRow($row);
+            $calcModels[] = $calcModel;
         }
-        return $dbData;
+        return $calcModels;
     }
 }
