@@ -18,4 +18,14 @@ abstract class ControllerAbstract
     {
         return $this->request;
     }
+
+    public function getTemplateContents(array $contents)
+    {
+        extract([$this]);
+        ob_start();
+        foreach ($contents as $content) {
+            include $content;
+        }
+        return ob_get_clean();
+    }
 }

@@ -6,13 +6,13 @@ namespace Model;
 
 class Calculations
 {
+    private string $status;
+
     //todo we can look at this together later (should auto serialize when we are asking this instantiated Class to turn into an array)
     public function __serialize(): array
     {
         return $this->getRow();
     }
-
-    private string $status;
 
     /** @var array */
     private array $row;

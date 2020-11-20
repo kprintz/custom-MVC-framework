@@ -7,8 +7,8 @@ namespace Model;
 class Request
 {
     private string $ip;
-    private string $date;
     private string $uri;
+    private string $date;
     private array $postData = [];
 
     public function __construct()

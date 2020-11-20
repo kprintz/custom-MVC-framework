@@ -14,10 +14,20 @@ class Router
 
     public function getFullRoute()
     {
-        //todo make sure always returns parts - or make specific parts into sub functions
+        $defaults = [
+            'Homepage',
+            'Index',
+            'execute'
+        ];
         $requestArray = explode('/', $this->request->getUri());
         $requestArray = array_filter($requestArray);
         $requestArray = array_values($requestArray);
+
+        for ($i = 0; $i < 3; $i++) {
+            if (!array_key_exists($i, $requestArray)) {
+                $requestArray[$i] = $defaults[$i];
+            }
+        }
 
         return $requestArray;
     }
@@ -27,17 +37,14 @@ class Router
      */
     public function getResponse()
     {
-        if (empty($this->getFullRoute()[0])) {
-            $indexRouter = new \Controller\Homepage\Index();
-            return $indexRouter->execute();
-        }
-
+        //todo maybe request these by name
         $controllerGroup = $this->getFullRoute()[0];
         $controller = $this->getFullRoute()[1];
         $method = $this->getFullRoute()[2];
         $indexRouter = '\\Controller\\' . $controllerGroup . '\\' . $controller;
         $indexRouter = new $indexRouter;
 
+        //todo upon nothing found/valid return 404 page
         return $indexRouter->$method();
     }
 }

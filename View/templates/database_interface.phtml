@@ -1,8 +1,11 @@
+<?php
+/** @var $this \Controller\Data\Index */
+?>
 <h1 class="header">Edit Databse</h1>
 
 <div class="edit-window edit-window-container">
 
-    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window edit-window__form" id="edit-form-reset">
+    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window edit-window__form">
         <div class="edit-window__action">
             <label for="filter-options">What do you want to do</label>
             <select name="filter" id="filter-options">
@@ -15,56 +18,62 @@
             </select>
         </div>
 
-        <div class="edit-window__filters">
 
-            <div class="edit-window__filters_options">
-                <label for="columnName">Column Name
-                    <select name="columnName" data-visible-for="update,delete,filter">
-                        <option value="ip">IP</option>
-                        <option value="date">Date</option>
-                        <option value="calculation">Calculation</option>
-                    </select>
-                </label>
-            </div>
+        <div class="edit-window__filters_options" data-visible-for="hide,update,delete,filter">
+            <label for="columnName">Column Name
+                <select name="columnName">
+                    <option value="ip">IP</option>
+                    <option value="date">Date</option>
+                    <option value="calculation">Calculation</option>
+                </select>
+            </label>
+        </div>
 
-            <div class="edit-window__filters_options">
-                <div class="view_delete">
-                    <label for="calculation">Data Point
-                        <input type="text" name="calculation" data-visible-for="add,delete,filter">
-                    </label>
-                </div>
-
-            </div>
-
-            <div class="edit-window__filters_options">
-                <label for="currentValue">Current Value
-                    <input type="text" name="currentValue" data-visible-for="update">
-                </label>
-
-                <label for="newValue">New Value
-                    <input type="text" name="newValue" data-visible-for="update">
+        <div class="edit-window__filters_options" data-visible-for="hide,add">
+            <div class="view_delete">
+                <label for="calculation">Calculation
+                    <input type="text" name="calculation">
                 </label>
             </div>
         </div>
+
+        <div class="edit-window__filters_options" data-visible-for="hide,delete,filter,update">
+            <div class="view_delete">
+                <label for="filterValue">Data Point
+                    <input type="text" name="filterValue">
+                </label>
+            </div>
+        </div>
+
+        <div class="edit-window__filters_options" data-visible-for="hide,update">
+            <label for="newValue">New Value
+                <input type="text" name="newValue">
+            </label>
+        </div>
+
         <input type="submit" value="Submit" class="buttons buttons__admin">
         <div class="insert-message"></div>
     </form>
 
     <div class="database-display edit-window edit-window__form">
         <table>
-            <?php
-
-
-
-            ?>
             <tr class="table-headers">
-                <!-- todo change this so it is pulled from the column names -->
-                <th>ID</th>
-                <th>IP Address</th>
-                <th>Date</th>
-                <th>Calculation</th>
+                <?php foreach ($this->tableHeaders as $header): ?>
+                    <th>
+                        <?php echo ucfirst($header); ?>
+                    </th>
+                <?php endforeach; ?>
             </tr>
+            <?php /** @var \Model\Calculations $calcModel */
+            foreach ($this->calcModels as $calcModel): ?>
+                <tr>
+                    <?php foreach ($this->tableHeaders as $fieldName): ?>
+                        <td>
+                            <?php echo $calcModel->getData($fieldName); ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
         </table>
-
     </div>
 </div>

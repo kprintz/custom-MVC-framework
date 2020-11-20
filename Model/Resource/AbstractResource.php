@@ -1,15 +1,15 @@
 <?php
 
-
 namespace Model\Resource;
 
+use Model\ResourceInterface;
 
-abstract class AbstractResource extends \DB\Core\DbConnect
+abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceInterface
 {
     protected string $TABLE_NAME;
-    protected string $COL_IP;
-    protected string $COL_DATE;
-    protected string $COL_CALCULATION;
+    public string $COLUMN_NAME = 'columnName';
+    public string $FILTER_VALUE = 'filterValue';
+    public string $NEW_VALUE = 'newValue';
 
     protected $rowsUpdated;
 
@@ -49,7 +49,9 @@ abstract class AbstractResource extends \DB\Core\DbConnect
      */
     public function update(array $assocData)
     {
-        $sql = 'UPDATE ' . $this->TABLE_NAME . ' SET ' . $assocData['columnName'] . ' = \'' . $assocData['newValue'] . '\'  WHERE ' . $assocData['columnName'] . ' = \'' . $assocData['currentValue'] . '\'';
+        $sql = 'UPDATE ' . $this->TABLE_NAME . ' SET ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
+            $assocData[$this->NEW_VALUE] . '\'  WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
+            $assocData[$this->FILTER_VALUE] . '\'';
 
         return $this->executeSql($sql, array_values($assocData));
     }
@@ -60,7 +62,8 @@ abstract class AbstractResource extends \DB\Core\DbConnect
      */
     public function delete(array $assocData)
     {
-        $sql = 'DELETE FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData['columnName'] . ' = \'' . $assocData['calculation'] . '\'';
+        $sql = 'DELETE FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
+            $assocData[$this->FILTER_VALUE] . '\'';
 
         return $this->executeSql($sql, array_values($assocData));
     }
@@ -71,13 +74,13 @@ abstract class AbstractResource extends \DB\Core\DbConnect
      */
     public function filter(array $assocData)
     {
-        $sql = 'SELECT * FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData['columnName'] . ' = \'' . $assocData['calculation'] . '\'';
+        $sql = 'SELECT * FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
+            $assocData[$this->FILTER_VALUE] . '\'';
 
         return $this->executeSql($sql, array_values($assocData));
     }
 
     /**
-     * @param array $assocData
      * @return bool|\PDOStatement
      */
     public function getAllData()

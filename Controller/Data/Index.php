@@ -1,20 +1,24 @@
 <?php
 
-
 namespace Controller\Data;
 
+use Controller\Core\ControllerIndexAbstract;
+use Model\Resource\CalculationsResource;
 
-class Index
+class Index extends ControllerIndexAbstract
 {
+    public $tableHeaders;
+    public $calcModels;
+
     public function execute()
     {
-        //todo put in parent class (with router?)
-        ob_start();
-        $beforeBlock = include_once 'View/templates/head.phtml';
-        $afterBlock = include_once 'View/templates/database_interface.phtml';
-        $mainBlock = include_once 'View/templates/foot.phtml';
-        $html = ob_get_contents();
-        ob_end_clean();
-        return $html;
+        $calcRes = new CalculationsResource();
+        $this->calcModels = $calcRes->getAllData();
+        $this->tableHeaders = $calcRes->getColumnNames();
+        return $this->getTemplateContents([
+            $this->HEADER,
+            'View/templates/database_interface.phtml',
+            $this->FOOTER
+        ]);
     }
 }

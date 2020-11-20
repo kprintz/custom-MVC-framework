@@ -1,20 +1,18 @@
 <?php
 
-
 namespace Controller\Homepage;
 
+use Controller\Core\ControllerIndexAbstract;
 
-class Index
+class Index extends ControllerIndexAbstract
 {
 
     public function execute()
     {
-        ob_start();
-        $beforeBlock = include_once 'View/templates/head.phtml';
-        $afterBlock = include_once 'View/templates/index.phtml';
-        $mainBlock = include_once 'View/templates/foot.phtml';
-        $html = ob_get_contents();
-        ob_end_clean();
-        return $html;
+        return $this->getTemplateContents([
+            $this->HEADER,
+            'View/templates/index.phtml',
+            $this->FOOTER
+        ]);
     }
 }
