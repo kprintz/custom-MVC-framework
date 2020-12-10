@@ -8,7 +8,7 @@ use Model\Calculations;
 class CalculationsResource extends AbstractResource
 {
     public string $TABLE_NAME = 'Calculations';
-    public string $COL_ID = 'id';
+    public string $COL_ID = 'ID';
     public string $COL_IP = 'ip';
     public string $COL_DATE = 'date';
     public string $COL_CALCULATION = 'calculation';
@@ -21,48 +21,6 @@ class CalculationsResource extends AbstractResource
             $this->COL_DATE,
             $this->COL_CALCULATION,
         ];
-    }
-
-    /**
-     * @param array $assocData
-     * @return Calculations
-     */
-    public function add(array $assocData)
-    {
-        $statement = parent::add($assocData);
-        $calcModel = new Calculations();
-        $calcModel->setStatus($this->rowsUpdated);
-        $calcModel->addRow($assocData);
-
-        return $calcModel;
-    }
-
-    /**
-     * @param array $assocData
-     * @return Calculations
-     */
-    public function update(array $assocData)
-    {
-        $statement = parent::update($assocData);
-        $calcModel = new Calculations();
-        $calcModel->setStatus($this->rowsUpdated);
-        $calcModel->addRow($assocData);
-
-        return $calcModel;
-    }
-
-    /**
-     * @param array $assocData
-     * @return Calculations
-     */
-    public function delete(array $assocData)
-    {
-        $statement = parent::delete($assocData);
-        $calcModel = new Calculations();
-        $calcModel->setStatus($this->rowsUpdated);
-        $calcModel->addRow($assocData);
-
-        return $calcModel;
     }
 
     /**

@@ -11,6 +11,8 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
     public string $FILTER_VALUE = 'filterValue';
     public string $NEW_VALUE = 'newValue';
 
+    public string $COL_ID = 'ID';
+
     protected $rowsUpdated;
 
     /**
@@ -49,23 +51,28 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
      */
     public function update(array $assocData)
     {
-        $sql = 'UPDATE ' . $this->TABLE_NAME . ' SET ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
-            $assocData[$this->NEW_VALUE] . '\'  WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
-            $assocData[$this->FILTER_VALUE] . '\'';
+        $sqlSetData = [];
+        foreach ($assocData as $key => $value) {
+            $sqlSetData[] = $key . " = '{$value}'";
+        }
+        $sql = 'UPDATE ' . $this->TABLE_NAME . ' SET ' .
+            implode(',', $sqlSetData)
+            . ' WHERE ' .
+            $this->COL_ID . ' = \'' . $assocData[$this->COL_ID] . '\'';
 
         return $this->executeSql($sql, array_values($assocData));
     }
 
     /**
-     * @param array $assocData
+     * @param $id
      * @return bool|\PDOStatement
      */
-    public function delete(array $assocData)
+    public function delete($id)
     {
-        $sql = 'DELETE FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
-            $assocData[$this->FILTER_VALUE] . '\'';
+        $sql = 'DELETE FROM ' . $this->TABLE_NAME . ' WHERE ' . $this->COL_ID . ' = \'' .
+            $id . '\'';
 
-        return $this->executeSql($sql, array_values($assocData));
+        return $this->executeSql($sql, [$id]);
     }
 
     /**
@@ -78,6 +85,14 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
             $assocData[$this->FILTER_VALUE] . '\'';
 
         return $this->executeSql($sql, array_values($assocData));
+    }
+
+    public function getRow($id)
+    {
+        $sql = 'SELECT * FROM ' . $this->TABLE_NAME . ' WHERE ID = \'' . $id . '\'';
+
+        $statement = $this->executeSql($sql, [$id]);
+        return $statement->fetch();
     }
 
     /**

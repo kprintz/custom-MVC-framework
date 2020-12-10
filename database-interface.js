@@ -29,7 +29,7 @@ function DatabaseInterface() {
     this.ajaxCompleteHandler = function(data) {
         $tableDisplay.show();
         let parsedData = JSON.parse(data);
-        let rowsUpdated = parsedData['rowsUpdated'];
+        let rowsUpdated = parsedData['rowsModified'];
         let tableHTML = " "
 
         parsedData['allResults'].forEach(element => {
