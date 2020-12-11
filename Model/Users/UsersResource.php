@@ -1,8 +1,8 @@
 <?php
 
-namespace Model\Resource;
+namespace Model\Users;
 
-use DB\Core\DbConnect;
+use Model\Resource\AbstractResource;
 
 class UsersResource extends AbstractResource
 {

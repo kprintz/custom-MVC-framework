@@ -1,9 +1,8 @@
 <?php
 
-namespace Model\Resource;
+namespace Model\Calculations;
 
-use DB\Core\DbConnect;
-use Model\Calculations;
+use Model\Resource\AbstractResource;
 
 class CalculationsResource extends AbstractResource
 {
@@ -12,6 +11,7 @@ class CalculationsResource extends AbstractResource
     public string $COL_IP = 'ip';
     public string $COL_DATE = 'date';
     public string $COL_CALCULATION = 'calculation';
+    public string $COL_DELETED = 'deleted';
 
     public function getColumnNames()
     {
@@ -20,6 +20,7 @@ class CalculationsResource extends AbstractResource
             $this->COL_IP,
             $this->COL_DATE,
             $this->COL_CALCULATION,
+            $this->COL_DELETED
         ];
     }
 

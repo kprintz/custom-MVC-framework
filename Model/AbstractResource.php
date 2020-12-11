@@ -12,6 +12,7 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
     public string $NEW_VALUE = 'newValue';
 
     public string $COL_ID = 'ID';
+    public string $COL_DELETED = 'deleted';
 
     protected $rowsUpdated;
 

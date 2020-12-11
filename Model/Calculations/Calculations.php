@@ -1,16 +1,21 @@
 <?php
 
-namespace Model;
+namespace Model\Calculations;
 
-use Model\Resource\CalculationsResource;
+use Model\AbstractModel;
+use Model\Calculations\CalculationsResource;
 
-class Calculations
+class Calculations extends AbstractModel
 {
     private string $status;
     private int $id;
     private string $ip;
     private string $date;
     private int $calculation;
+    private string $deleted;
+
+    /** @var array */
+    private array $row;
 
     public function addRow($row)
     {
@@ -23,9 +28,6 @@ class Calculations
     {
         return $this->getRow();
     }
-
-    /** @var array */
-    private array $row;
 
     public function setStatus($status)
     {
@@ -82,6 +84,17 @@ class Calculations
         return $this->calculation;
     }
 
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
     public function getRow()
     {
         return $this->row;
@@ -104,43 +117,33 @@ class Calculations
     public function save()
     {
         $calcResource = new CalculationsResource();
-        if (!$this->id) {
-            $calcResource->add([
-                $calcResource->COL_IP => $this->getIP(),
-                $calcResource->COL_DATE => $this->getDate(),
-                $calcResource->COL_CALCULATION => $this->getCalculation()
-            ]);
-            return $this;
-        }
+
         $resourceRow = $calcResource->getRow($this->id);
+        $modelRow = [
+            $calcResource->COL_ID => $this->getId(),
+            $calcResource->COL_IP => $this->getIp(),
+            $calcResource->COL_DATE => $this->getDate(),
+            $calcResource->COL_CALCULATION => $this->getCalculation(),
+            $calcResource->COL_DELETED => $this->getDeleted()
+        ];
+
         if (is_array($resourceRow) && $resourceRow[$calcResource->COL_ID]) {
-            $modelRow = [
-                $calcResource->COL_ID => $this->getId(),
-                $calcResource->COL_IP => $this->getIp(),
-                $calcResource->COL_DATE => $this->getDate(),
-                $calcResource->COL_CALCULATION => $this->getCalculation()
-            ];
             $calcResource->update(array_merge($resourceRow, $modelRow));
             if (!$calcResource->getNumberRowsLastUpdated()) {
                 //todo no rows were updated in DB
             }
         }
-        if (!$resourceRow) {
-            $calcResource->add([
-                $calcResource->COL_ID => $this->getId(),
-                $calcResource->COL_IP => $this->getIp(),
-                $calcResource->COL_DATE => $this->getDate(),
-                $calcResource->COL_CALCULATION => $this->getCalculation()
-            ]);
-        }
 
+        if (!$this->id || !$resourceRow) {
+            $calcResource->add($modelRow);
+        }
         return $this;
     }
 
     public function delete()
     {
         if (!$this->getId()) {
-            return 'error';
+            return 'no records matching this id';
         }
         $calcResource = new CalculationsResource();
         $calcResource->delete($this->getId());
@@ -156,7 +159,8 @@ class Calculations
             $calcResource->COL_ID => $this->getId(),
             $calcResource->COL_IP => $this->getIp(),
             $calcResource->COL_DATE => $this->getDate(),
-            $calcResource->COL_CALCULATION => $this->getCalculation()
+            $calcResource->COL_CALCULATION => $this->getCalculation(),
+            $calcResource->COL_DELETED => $this->getDeleted()
         ];
 
         //todo set data here

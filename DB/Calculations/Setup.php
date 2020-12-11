@@ -3,7 +3,7 @@
 namespace DB\Calculations;
 
 use DB\Core\DbConnect;
-use Model\Resource\CalculationsResource;
+use Model\Calculations\CalculationsResource;
 
 class Setup extends DbConnect implements \DB\Core\DbSetupInterface
 {
@@ -15,7 +15,8 @@ class Setup extends DbConnect implements \DB\Core\DbSetupInterface
             $calcModel->COL_ID . ' INT AUTO_INCREMENT PRIMARY KEY, ' .
             $calcModel->COL_IP . ' CHAR(28), ' .
             $calcModel->COL_DATE . ' DATE, ' .
-            $calcModel->COL_CALCULATION . ' CHAR(10))';
+            $calcModel->COL_CALCULATION . ' VARCHAR(255), ' .
+            $calcModel->COL_DELETED . ' TINYINT(1))';
 
         $stmt = $this->connect();
         return $stmt->exec($sql);
