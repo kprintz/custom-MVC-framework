@@ -1,6 +1,6 @@
 <?php
 
-namespace Model\Resource;
+namespace Model;
 
 use Model\ResourceInterface;
 

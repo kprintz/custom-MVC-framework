@@ -19,6 +19,11 @@ abstract class ControllerAbstract
         return $this->request;
     }
 
+    public function setData($key, $data)
+    {
+        $this->$key = $data;
+    }
+
     public function getTemplateContents(array $contents)
     {
         extract([$this]);

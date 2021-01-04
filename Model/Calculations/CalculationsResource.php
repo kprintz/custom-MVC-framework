@@ -2,12 +2,12 @@
 
 namespace Model\Calculations;
 
-use Model\Resource\AbstractResource;
+use Model\AbstractResource;
 
 class CalculationsResource extends AbstractResource
 {
     public string $TABLE_NAME = 'Calculations';
-    public string $COL_ID = 'ID';
+    public string $COL_ID = 'id';
     public string $COL_IP = 'ip';
     public string $COL_DATE = 'date';
     public string $COL_CALCULATION = 'calculation';

@@ -1,21 +1,36 @@
 <?php
-/** @var $this \Controller\Data\Index */
+/** @var Ajax $this */
+
+use Controller\Database\Ajax;
+use Model\Calculations\Calculations;
+use Model\Users\Users;
+
 ?>
 <h1 class="header">Edit Databse</h1>
 
 <div class="edit-window edit-window-container">
 
-    <form data-form="get-data" action="/Calculation/Index/" method="POST" class="edit-window edit-window__form">
+    <div class="edit-window__action">
+        <label for="database-options">Which database do you want to edit?</label>
+        <select name="filter" id="database-options">
+            <option value="">Select...</option>
+            <option data-database="Users" data-method="users" value="Users">Users</option>
+            <option data-database="Calculations" data-method="calculations" value="Calculations">Calculations</option>
+        </select>
+    </div>
+
+    <form data-form="get-data" method="POST" class="edit-window edit-window__form" id="set-form-action">
         <div class="edit-window__action">
-            <label for="filter-options">What do you want to do</label>
-            <select name="filter" id="filter-options">
-                <option data-show-val="" value="">Select...</option>
-                <option data-show-val="add" data-method="add" value="add">Add Data</option>
-                <option data-show-val="update" data-method="update" value="update">Update Data</option>
-                <option data-show-val="delete" data-method="delete" value="delete">Delete Data</option>
-                <option data-show-val="filter" data-method="filter" value="filter">Filter Data</option>
-                <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
-            </select>
+                <label for="filter-options">What do you want to do?</label>
+                <select name="filter" id="filter-options">
+                    <option data-show-val="" value="">Select...</option>
+                    <option data-show-val="add" data-method="add" value="add">Add Data</option>
+                    <option data-show-val="update" data-method="update" value="update">Update Data</option>
+                    <option data-show-val="delete" data-method="delete" value="delete">Delete Data</option>
+                    <option data-show-val="filter" data-method="filter" value="filter">Filter Data</option>
+                    <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
+                </select>
+
         </div>
 
 
@@ -58,18 +73,20 @@
     <div class="database-display edit-window edit-window__form">
         <table>
             <tr class="table-headers">
-                <?php foreach ($this->tableHeaders as $header): ?>
+                <?php
+                foreach ($this->tableHeaders as $header): ?>
                     <th>
                         <?php echo ucfirst($header); ?>
                     </th>
                 <?php endforeach; ?>
             </tr>
-            <?php /** @var \Model\Calculations $calcModel */
-            foreach ($this->calcModels as $calcModel): ?>
+            <?php
+            /** @var Ajax $tableRow */
+            foreach ($this->tableRows as $tableRow): ?>
                 <tr>
                     <?php foreach ($this->tableHeaders as $fieldName): ?>
                         <td>
-                            <?php echo $calcModel->getData($fieldName); ?>
+                            <?php $this->data; ?>
                         </td>
                     <?php endforeach; ?>
                 </tr>

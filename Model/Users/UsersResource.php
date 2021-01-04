@@ -2,7 +2,7 @@
 
 namespace Model\Users;
 
-use Model\Resource\AbstractResource;
+use Model\AbstractResource;
 
 class UsersResource extends AbstractResource
 {
@@ -12,6 +12,7 @@ class UsersResource extends AbstractResource
     public string $COL_FN = 'first';
     public string $COL_LN = 'last';
     public string $COL_DOB = 'dob';
+    public string $COL_DELETED = 'deleted';
 
     public function getColumnNames()
     {
@@ -20,6 +21,7 @@ class UsersResource extends AbstractResource
             $this->COL_FN,
             $this->COL_LN,
             $this->COL_DOB,
+            $this->COL_DELETED
         ];
     }
 

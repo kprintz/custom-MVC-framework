@@ -142,12 +142,12 @@ function Calculator() {
             calcResult = calcResult.toFixed(3);
         }
         $('#display').text(calcResult);
-
+        //todo update this so url is not hardcoded
         $.ajax({
             type: 'POST',
-            url: '/Calculation/Index/add',
+            url: '/Calculations/Index/add',
             data: {
-                'calculation': calcResult,
+                'calculation': calcResult
             }
         }).done(function (data, test) {
             console.log('we are done');

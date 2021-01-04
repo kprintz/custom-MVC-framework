@@ -15,7 +15,7 @@ abstract class AbstractModel
 
     }
 
-    public function load()
+    public function load($id)
     {
 
     }

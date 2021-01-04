@@ -13,6 +13,15 @@ class Users extends AbstractModel
     private string $dob;
     private string $deleted;
 
+    /** @var array */
+    private array $row;
+
+    public function addRow($row)
+    {
+        $this->row = $row;
+        return $this;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -74,26 +83,35 @@ class Users extends AbstractModel
         return $this;
     }
 
+    public function getData($key)
+    {
+        if (array_key_exists($key, $this->row)) {
+            return $this->row[$key];
+        }
+        return '';
+    }
+
     public function save()
     {
         $usersResource = new UsersResource();
-        if (!$this->id) {
-            $usersResource->add([
-                $usersResource->COL_FN => $this->getFirst(),
-                $usersResource->COL_LN => $this->getLast(),
-                $usersResource->COL_DOB => $this->getDob()
-            ]);
-            return $this;
-        }
 
         $resourceRow = $usersResource->getRow($this->id);
-        $modelRow = [
-            $usersResource->COL_ID => $this->getId(),
-            $usersResource->COL_FN => $this->getFirst(),
-            $usersResource->COL_LN => $this->getLast(),
-            $usersResource->COL_DOB => $this->getDob(),
-            $usersResource->COL_DELETED => $this->getDeleted()
-        ];
+
+//        $modelRow = [];
+//        foreach ($resourceRow->getColumnNames() as $key => $value) {
+//            $modelRow[] = $key . " = '{$value}'";
+//        }
+        for ($i = 0; $i < count($resourceRow->getColumnNames()); $i++) {
+            $modelRow[$i] = array_keys($resourceRow->getColumnNames()[$i]);
+        }
+
+//        $modelRow = [
+//            $usersResource->COL_ID => $this->getId(),
+//            $usersResource->COL_FN => $this->getFirst(),
+//            $usersResource->COL_LN => $this->getLast(),
+//            $usersResource->COL_DOB => $this->getDob(),
+//            $usersResource->COL_DELETED => $this->getDeleted()
+//        ];
 
         if (is_array($resourceRow) && $resourceRow[$usersResource->COL_ID]) {
             $usersResource->update(array_merge($resourceRow, $modelRow));
@@ -102,8 +120,9 @@ class Users extends AbstractModel
             }
         }
 
-        if (!$resourceRow) {
+        if (!$this->id || !$resourceRow) {
             $usersResource->add($modelRow);
+            return $this;
         }
         return $this;
     }

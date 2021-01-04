@@ -119,6 +119,12 @@ class Calculations extends AbstractModel
         $calcResource = new CalculationsResource();
 
         $resourceRow = $calcResource->getRow($this->id);
+        $columnName = $calcResource->getColumnNames();
+        $modelRow = [];
+        for ($i = 0; $i < count($columnName); $i++) {
+            $modelRow[] = [$columnName[$i] => $this->{$columnName[$i]} . ','];
+        }
+
         $modelRow = [
             $calcResource->COL_ID => $this->getId(),
             $calcResource->COL_IP => $this->getIp(),

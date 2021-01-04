@@ -1,9 +1,27 @@
 function DatabaseInterface() {
     let self = this;
-    let $option = jQuery('#filter-options');
+    let $databaseSelection = jQuery('#database-options');
+    let $filterOption = jQuery('#filter-options');
     let $allMenus = jQuery('[data-visible-for*="hide"]');
     let $tableDisplay = jQuery('.database-display');
     $allMenus.hide();
+    $tableDisplay.hide();
+
+    this.changeFormAction = function() {
+        let selection = $databaseSelection.find(':selected').attr('data-database');
+        $('#set-form-action').attr('action', `'/${selection}/Index/'`);
+        let method = $databaseSelection.find(':selected').attr('data-method');
+        //todo - make url more flexible
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Database/Ajax/' + method,
+            data: {
+                'test': method
+            },
+        }).done(function (data, test) {
+            $tableDisplay.show();
+        });
+    }
 
     this.displayOptions = function() {
         let showType = jQuery("#filter-options").find(':selected').attr('data-show-val');
@@ -20,13 +38,13 @@ function DatabaseInterface() {
 
         jQuery.ajax({
             type: 'POST',
-            //todo make this get the form action - you will need to update the current state of the form action as the user uses the main select field
             url: jQuery("form[data-form='get-data']").attr('action') + $method,
             data: formData,
         }).done(this.ajaxCompleteHandler);
     }
 
     this.ajaxCompleteHandler = function(data) {
+        //todo only show table selected (users OR calculations)
         $tableDisplay.show();
         let parsedData = JSON.parse(data);
         let rowsUpdated = parsedData['rowsModified'];
@@ -42,7 +60,8 @@ function DatabaseInterface() {
     }
 
     jQuery('[data-form="get-data"]').on('submit', this.formSubmitHandler.bind(this));
-    $option.on("change", this.displayOptions);
+    $filterOption.on("change", this.displayOptions);
+    $databaseSelection.on("change", this.changeFormAction);
 }
 
 let databaseInterface = new DatabaseInterface();
