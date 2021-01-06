@@ -1,65 +1,19 @@
 <?php
 
-namespace Controller\Calculation;
+namespace Controller\Calculations;
 
-use Controller\Core\ControllerAbstract;
-use Model\Calculations\Calculations;
+use Controller\Core\ControllerIndexAbstract;
+use View\Template;
 
-class Index extends ControllerAbstract
+class Index extends ControllerIndexAbstract
 {
-    public function add()
+    public function execute()
     {
-        $calcModel = new Calculations();
-        $calcModel->setId(50);
-        $calcModel->setIp('127.0.0.2');
-        $calcModel->setDate('1990-12-08');
-        $calcModel->setCalculation(123456);
-        $calcModel->save();
-
-        return json_encode([
-            //todo decide what to return
+        $template = new Template;
+        return $template->render([
+            $this->HEADER,
+            'View/templates/database_interface.phtml',
+            $this->FOOTER
         ]);
-    }
-
-    public function update()
-    {
-        $calcModel = new Calculations();
-        $calcModel->setDate('1989-12-02');
-        $calcModel->setIp('127.0.0.2');
-        $calcModel->setCalculation(999);
-        $calcModel->setDeleted(date('Y-m-d'));
-        $calcModel->setId(3);
-        $calcModel->save();
-
-        $calcModel->load(3);
-
-        return json_encode([
-            //todo decide what to return
-        ]);
-    }
-
-    public function delete()
-    {
-        $calcModel = new Calculations();
-        $calcModel->setDeleted(date('Y-m-d'));
-        $calcModel->setId(29);
-        $calcModel->save();
-
-        return json_encode([
-            //todo decide what to return
-        ]);
-    }
-
-    public function filter()
-    {
-        //todo update this to use calcmodel - calccollections?
-
-    }
-
-    public function getAllData()
-    {
-        //todo update this to use calcmodel - calccollections?
-
     }
 }
-

@@ -24,6 +24,7 @@ abstract class ControllerAbstract
         $this->$key = $data;
     }
 
+    //todo move to template
     public function getTemplateContents(array $contents)
     {
         extract([$this]);

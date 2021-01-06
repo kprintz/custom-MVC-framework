@@ -3,62 +3,18 @@
 
 namespace Controller\Users;
 
-use Controller\Core\ControllerAbstract;
-use Model\Users\Users;
+use Controller\Core\ControllerIndexAbstract;
+use View\Template;
 
-class Index extends ControllerAbstract
+class Index extends ControllerIndexAbstract
 {
-    public function add()
+    public function execute()
     {
-        $usersModel = new Users();
-        $usersModel->setFirst('Katherine');
-        $usersModel->setLast('Printz');
-        $usersModel->setDob('1990-05-08');
-        $usersModel->save();
-
-        return json_encode([
-           //todo decide what to return
+        $template = new Template;
+        return $template->render([
+            $this->HEADER,
+            'View/templates/database_interface.phtml',
+            $this->FOOTER
         ]);
-    }
-
-    public function update()
-    {
-        $usersModel = new Users();
-        $usersModel->setId(3);
-        $usersModel->setFirst('Katherine');
-        $usersModel->setLast('Printz');
-        $usersModel->setDob('1990-05-08');
-        $usersModel->setDeleted(date('Y-m-d'));
-        $usersModel->save();
-
-        $usersModel->load(3);
-
-        return json_encode([
-            //todo decide what to return
-        ]);
-    }
-
-    public function delete()
-    {
-        $usersModel = new Users();
-        $usersModel->setId(29);
-        $usersModel->setDeleted(date('Y-m-d'));
-        $usersModel->save();
-
-        return json_encode([
-            //todo decide what to return
-        ]);
-    }
-
-    public function filter()
-    {
-        //todo update this to use user model - user collections?
-
-    }
-
-    public function getAllData()
-    {
-        //todo update this to use user model - user collections?
-
     }
 }

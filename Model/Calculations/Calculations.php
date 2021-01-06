@@ -3,7 +3,6 @@
 namespace Model\Calculations;
 
 use Model\AbstractModel;
-use Model\Calculations\CalculationsResource;
 
 class Calculations extends AbstractModel
 {

@@ -44,7 +44,7 @@ class CalculationsResource extends AbstractResource
     }
 
     /**
-     * @return Calculations[]
+     * @return array
      */
     public function getAllData()
     {
