@@ -4,6 +4,8 @@ namespace Controller\Calculations;
 
 use Controller\Core\ControllerAjaxAbstract;
 use Model\Calculations\Calculations;
+use Model\Calculations\CalculationsCollections;
+use Model\Calculations\CalculationsCollectionResource;
 use Model\Calculations\CalculationsResource;
 
 /**
@@ -28,11 +30,12 @@ class Ajax extends ControllerAjaxAbstract
 
     public function add()
     {
+        $request = $this->getRequest();
+
         $calcModel = new Calculations();
-        $calcModel->setId(50);
-        $calcModel->setIp('127.0.0.2');
-        $calcModel->setDate('1990-12-08');
-        $calcModel->setCalculation(123456);
+        $calcModel->setIp($request->getIP());
+        $calcModel->setDate($request->getDate());
+        $calcModel->setCalculation($request->getPostData('calculation'));
         $calcModel->setDeleted(0);
         $calcModel->save();
 
@@ -43,25 +46,30 @@ class Ajax extends ControllerAjaxAbstract
 
     public function update()
     {
-        $calcModel = new Calculations();
-        $calcModel->setDate('1989-12-02');
-        $calcModel->setIp('127.0.0.2');
-        $calcModel->setCalculation(999);
-        $calcModel->setDeleted(date('Y-m-d'));
-        $calcModel->setId(3);
-        $calcModel->save();
+        $request = $this->getRequest();
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
+        $updateTo = $request->getPostData('newValue');
 
-        $calcModel->load(3);
+        $calcModel = new Calculations();
+
+        $calcs = $calcModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
+        foreach ($calcs as $calcItem) {
+            $calcItem->setData($filterBy, $updateTo);
+            $calcItem->save();
+        }
 
         return json_encode([
-            //todo decide what to return
+            $calcs
         ]);
     }
 
     public function delete()
     {
         $calcModel = new Calculations();
-        $calcModel->setDeleted(date('Y-m-d'));
+        $calcModel->setDeleted(1);
         $calcModel->setId(29);
         $calcModel->save();
 
@@ -72,8 +80,17 @@ class Ajax extends ControllerAjaxAbstract
 
     public function filter()
     {
-        //todo update this to use calcmodel - calccollections?
+        $request = $this->getRequest();
 
+        $calcCollection = new CalculationsCollections();
+        $calcCollectionResource = new CalculationsCollectionResource();
+        $calcCollectionResource->filter([
+            $request->getPostData('columnName'),
+            $request->getPostData('filterValue')]);
+
+        return json_encode([
+            //todo decide what to return
+        ]);
     }
 
     public function getAllData()

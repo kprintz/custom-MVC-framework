@@ -3,21 +3,21 @@
 namespace DB\Calculations;
 
 use DB\Core\DbConnect;
-use Model\Calculations\CalculationsResource;
+use Model\Calculations\Calculations;
 
 class Setup extends DbConnect implements \DB\Core\DbSetupInterface
 {
     public function initialize()
     {
-        //todo change variable to calcResource
-        $calcModel = new CalculationsResource();
+        $calcModel = new Calculations();
+        $calcResource = $calcModel->getResource();
         //todo consider changing to DATETIME - will impact how the update function works if changing the date column data
-        $sql = 'CREATE TABLE IF NOT EXISTS ' . $calcModel->TABLE_NAME . ' ('.
-            $calcModel->COL_ID . ' INT AUTO_INCREMENT PRIMARY KEY, ' .
-            $calcModel->COL_IP . ' CHAR(28), ' .
-            $calcModel->COL_DATE . ' DATE, ' .
-            $calcModel->COL_CALCULATION . ' VARCHAR(255), ' .
-            $calcModel->COL_DELETED . ' TINYINT(1))';
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . $calcResource->TABLE_NAME . ' ('.
+            $calcResource->COL_ID . ' INT AUTO_INCREMENT PRIMARY KEY, ' .
+            $calcResource->COL_IP . ' CHAR(28), ' .
+            $calcResource->COL_DATE . ' DATE, ' .
+            $calcResource->COL_CALCULATION . ' VARCHAR(255), ' .
+            $calcResource->COL_DELETED . ' TINYINT(1))';
 
         $stmt = $this->connect();
         return $stmt->exec($sql);

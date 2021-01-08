@@ -24,9 +24,9 @@ function DatabaseInterface() {
         let parsedData = JSON.parse(data);
         let tableHTML = " "
 
-        parsedData['rows'].forEach(element => {
-            tableHTML += "<tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
-        });
+        // parsedData['rows'].forEach(element => {
+        //     tableHTML += "<tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+        // });
 
         jQuery('.table-headers').after(tableHTML);
     }

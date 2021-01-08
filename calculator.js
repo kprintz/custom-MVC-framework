@@ -145,7 +145,7 @@ function Calculator() {
         //todo update this so url is not hardcoded
         $.ajax({
             type: 'POST',
-            url: '/Calculations/Index/add',
+            url: '/Calculations/Ajax/add',
             data: {
                 'calculation': calcResult
             }

@@ -23,15 +23,4 @@ abstract class ControllerAbstract
     {
         $this->$key = $data;
     }
-
-    //todo move to template
-    public function getTemplateContents(array $contents)
-    {
-        extract([$this]);
-        ob_start();
-        foreach ($contents as $content) {
-            include $content;
-        }
-        return ob_get_clean();
-    }
 }

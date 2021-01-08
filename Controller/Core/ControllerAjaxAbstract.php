@@ -17,17 +17,4 @@ use Model\Users\UsersResource;
 abstract class ControllerAjaxAbstract extends ControllerAbstract
 {
 
-    //todo this function will be in a new subclass - that inherits \ControllerAjaxAbstract class
-    public function users()
-    {
-        $usersResource = new UsersResource();
-        $this->database = $usersResource->getAllData();
-        $this->tableRows = $usersResource->getAllData();
-        $this->tableHeaders = $usersResource->getColumnNames();
-        return $this->getTemplateContents([
-            $this->HEADER,
-            'View/templates/database_interface.phtml',
-            $this->FOOTER
-        ]);
-    }
 }

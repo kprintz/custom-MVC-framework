@@ -97,21 +97,13 @@ class Users extends AbstractModel
 
         $resourceRow = $usersResource->getRow($this->id);
 
-//        $modelRow = [];
-//        foreach ($resourceRow->getColumnNames() as $key => $value) {
-//            $modelRow[] = $key . " = '{$value}'";
-//        }
-        for ($i = 0; $i < count($resourceRow->getColumnNames()); $i++) {
-            $modelRow[$i] = array_keys($resourceRow->getColumnNames()[$i]);
-        }
-
-//        $modelRow = [
-//            $usersResource->COL_ID => $this->getId(),
-//            $usersResource->COL_FN => $this->getFirst(),
-//            $usersResource->COL_LN => $this->getLast(),
-//            $usersResource->COL_DOB => $this->getDob(),
-//            $usersResource->COL_DELETED => $this->getDeleted()
-//        ];
+        $modelRow = [
+            $usersResource->COL_ID => $this->getId(),
+            $usersResource->COL_FN => $this->getFirst(),
+            $usersResource->COL_LN => $this->getLast(),
+            $usersResource->COL_DOB => $this->getDob(),
+            $usersResource->COL_DELETED => $this->getDeleted()
+        ];
 
         if (is_array($resourceRow) && $resourceRow[$usersResource->COL_ID]) {
             $usersResource->update(array_merge($resourceRow, $modelRow));

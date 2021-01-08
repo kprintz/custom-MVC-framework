@@ -9,12 +9,21 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
     protected string $TABLE_NAME;
     public string $COLUMN_NAME = 'columnName';
     public string $FILTER_VALUE = 'filterValue';
-    public string $NEW_VALUE = 'newValue';
 
-    public string $COL_ID = 'ID';
+    public string $COL_ID = 'id';
     public string $COL_DELETED = 'deleted';
 
     protected $rowsUpdated;
+
+    public function __construct($tableName)
+    {
+        $this->TABLE_NAME = $tableName;
+    }
+
+    public function getIdColumnName()
+    {
+        return $this->COL_ID;
+    }
 
     /**
      * @param $sql
