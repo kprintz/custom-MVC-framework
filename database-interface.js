@@ -8,14 +8,13 @@ function DatabaseInterface() {
     $tableDisplay.hide();
 
     this.tableDisplayHandler = function() {
+        //todo clear data contents at the beginning of this function so that only the latest selection is displayed
         let selection = $tableSelection.find(':selected').attr('data-table');
-        //todo make action path flexible
-        $('#set-form-action').attr('action', `'/${selection}/Ajax/'`);
-        let method = $tableSelection.find(':selected').attr('data-table');
-        //todo - make ajax url below more flexible
+
+        //todo - make ajax url below more dynamic
         jQuery.ajax({
             type: 'GET',
-            url: '/Calculations/Ajax/getTableDisplay'
+            url: `/${selection}/Ajax/getTableDisplay`,
         }).done(this.ajaxTableDisplayHandler);
     }
 
@@ -24,9 +23,9 @@ function DatabaseInterface() {
         let parsedData = JSON.parse(data);
         let tableHTML = " "
 
-        // parsedData['rows'].forEach(element => {
-        //     tableHTML += "<tr><td>" + element.ID + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
-        // });
+        parsedData['rows'].forEach(element => {
+            tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+        });
 
         jQuery('.table-headers').after(tableHTML);
     }

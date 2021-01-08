@@ -6,13 +6,9 @@ use Model\AbstractResource;
 
 class UsersResource extends AbstractResource
 {
-
-    public string $TABLE_NAME = 'Users';
-    public string $COL_ID = 'ID';
     public string $COL_FN = 'first';
     public string $COL_LN = 'last';
     public string $COL_DOB = 'dob';
-    public string $COL_DELETED = 'deleted';
 
     public function getColumnNames()
     {
@@ -24,6 +20,4 @@ class UsersResource extends AbstractResource
             $this->COL_DELETED
         ];
     }
-
-
 }

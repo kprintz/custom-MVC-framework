@@ -4,6 +4,12 @@ namespace View;
 
 class Template
 {
+    public function setData($key, $data)
+    {
+        $this->{$key} = $data;
+        return $this;
+    }
+
     public function render(array $contents)
     {
         extract([$this]);

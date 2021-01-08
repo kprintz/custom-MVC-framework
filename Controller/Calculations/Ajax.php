@@ -18,13 +18,12 @@ class Ajax extends ControllerAjaxAbstract
 {
     public function getTableDisplay()
     {
-        $calcResource = new CalculationsResource();
+        $calcModel= new Calculations();
 
-        //todo need to update 'rows' to get all data instead of a single row once getalldata function is working
         return json_encode([
             'succes' => 'ajax request processed',
-            'tableHeaders' => $calcResource->getColumnNames(),
-            'rows' => $calcResource->getrow(50)
+            'tableHeaders' => $calcModel->getResource()->getColumnNames(),
+            'rows' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -53,16 +52,16 @@ class Ajax extends ControllerAjaxAbstract
 
         $calcModel = new Calculations();
 
-        $calcs = $calcModel->getCollection()->addFilter(
+        $collection = $calcModel->getCollection()->addFilter(
             [$filterBy => $currentValue]
         )->getItems();
-        foreach ($calcs as $calcItem) {
+        foreach ($collection as $calcItem) {
             $calcItem->setData($filterBy, $updateTo);
             $calcItem->save();
         }
 
         return json_encode([
-            $calcs
+            $collection
         ]);
     }
 
@@ -81,21 +80,29 @@ class Ajax extends ControllerAjaxAbstract
     public function filter()
     {
         $request = $this->getRequest();
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
 
-        $calcCollection = new CalculationsCollections();
-        $calcCollectionResource = new CalculationsCollectionResource();
-        $calcCollectionResource->filter([
-            $request->getPostData('columnName'),
-            $request->getPostData('filterValue')]);
+        $calcModel = new Calculations();
+
+        $collection = $calcModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
 
         return json_encode([
-            //todo decide what to return
+            $collection
         ]);
     }
 
     public function getAllData()
     {
-        //todo update this to use calcmodel - calccollections?
+        $calcModel = new Calculations();
+
+        $collection = $calcModel->getCollection()->getAllData()->getItems();
+
+        return json_encode([
+            $collection
+        ]);
 
     }
 }

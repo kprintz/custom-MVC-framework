@@ -85,33 +85,11 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
         return $this->executeSql($sql, [$id]);
     }
 
-    /**
-     * @param array $assocData
-     * @return bool|\PDOStatement
-     */
-    public function filter(array $assocData)
-    {
-        $sql = 'SELECT * FROM ' . $this->TABLE_NAME . ' WHERE ' . $assocData[$this->COLUMN_NAME] . ' = \'' .
-            $assocData[$this->FILTER_VALUE] . '\'';
-
-        return $this->executeSql($sql, array_values($assocData));
-    }
-
     public function getRow($id)
     {
         $sql = 'SELECT * FROM ' . $this->TABLE_NAME . ' WHERE ID = \'' . $id . '\'';
 
         $statement = $this->executeSql($sql, [$id]);
         return $statement->fetch();
-    }
-
-    /**
-     * @return bool|\PDOStatement
-     */
-    public function getAllData()
-    {
-        $sql = 'SELECT * FROM ' . $this->TABLE_NAME;
-
-        return $this->executeSql($sql);
     }
 }

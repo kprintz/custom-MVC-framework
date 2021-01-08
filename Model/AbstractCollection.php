@@ -46,4 +46,17 @@ abstract class AbstractCollection
         }
         return $this;
     }
+
+    public function getAllData()
+    {
+        $rows = $this->resource->getAllData();
+        foreach ($rows as $row) {
+            $calc = new $this->modelClass();
+            foreach ($row as $columnName => $value) {
+                $calc->setData($columnName, $value);
+            }
+            $this->addItem($calc);
+        }
+        return $this;
+    }
 }

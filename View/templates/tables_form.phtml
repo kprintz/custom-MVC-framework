@@ -1,0 +1,52 @@
+<?php
+/** @var $this \View\Template */
+?>
+
+<form data-form="get-data" method="POST" class="edit-window edit-window__form" id="set-form-action">
+    <div class="edit-window__action">
+        <label for="filter-options">What do you want to do?</label>
+        <select name="filter" id="filter-options">
+            <option data-show-val="" value="">Select...</option>
+            <option data-show-val="add" data-method="add" value="add">Add Data</option>
+            <option data-show-val="update" data-method="update" value="update">Update Data</option>
+            <option data-show-val="delete" data-method="delete" value="delete">Delete Data</option>
+            <option data-show-val="filter" data-method="filter" value="filter">Filter Data</option>
+            <option data-show-val="all" data-method="getAllData" value="getAllData">View All Data</option>
+        </select>
+    </div>
+
+    <div class="edit-window__filters_options" data-visible-for="hide,update,delete,filter">
+        <label for="columnName">Column Name
+            <select name="columnName">
+                <option value="ip">IP</option>
+                <option value="date">Date</option>
+                <option value="calculation">Calculation</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="edit-window__filters_options" data-visible-for="hide,add">
+        <div class="view_delete">
+            <label for="calculation">Calculation
+                <input type="text" name="calculation">
+            </label>
+        </div>
+    </div>
+
+    <div class="edit-window__filters_options" data-visible-for="hide,delete,filter,update">
+        <div class="view_delete">
+            <label for="filterValue">Data Point
+                <input type="text" name="filterValue">
+            </label>
+        </div>
+    </div>
+
+    <div class="edit-window__filters_options" data-visible-for="hide,update">
+        <label for="newValue">New Value
+            <input type="text" name="newValue">
+        </label>
+    </div>
+
+    <input type="submit" value="Submit" class="buttons buttons__admin">
+    <div class="insert-message"></div>
+</form>

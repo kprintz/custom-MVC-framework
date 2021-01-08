@@ -2,7 +2,7 @@
 
 namespace Model;
 
-abstract class AbstractModel
+abstract class AbstractModel implements \JsonSerializable
 {
     protected string $table;
     protected $resource;
@@ -16,6 +16,15 @@ abstract class AbstractModel
         $resourceName = "\\Model\\$this->table\\$this->table" . 'Resource';
         $this->collectionModel = new $collectionName($this->table);
         $this->resource = new $resourceName($this->table);
+    }
+
+    public function jsonSerialize()
+    {
+        $array = [];
+        foreach ($this->getResource()->getColumnNames() as $columnName) {
+            $array[$columnName] = $this->getData($columnName);
+        }
+        return $array;
     }
 
     /**

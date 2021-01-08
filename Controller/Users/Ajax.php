@@ -5,6 +5,8 @@ namespace Controller\Users;
 use Controller\Core\ControllerAjaxAbstract;
 use Model\Users\Users;
 use Model\Users\UsersResource;
+use Model\Users\UsersCollection;
+use Model\Users\UsersCollectionResource;
 
 /**
  * Child class for Users-related Ajax controller actions
@@ -16,22 +18,23 @@ class Ajax extends ControllerAjaxAbstract
 {
     public function getTableDisplay()
     {
-        $usersResource = new UsersResource();
+        $usersModel= new Users();
 
-        //todo need to update 'rows' to get all data instead of a single row once getalldata function is working
         return json_encode([
             'succes' => 'ajax request processed',
-            'tableHeaders' => $usersResource->getColumnNames(),
-            'rows' => $usersResource->getrow(50)
+            'tableHeaders' => $usersModel->getResource()->getColumnNames(),
+            'rows' => $usersModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
     public function add()
     {
+        $request = $this->getRequest();
+
         $usersModel = new Users();
-        $usersModel->setFirst('Katherine');
-        $usersModel->setLast('Printz');
-        $usersModel->setDob('1990-05-08');
+        $usersModel->setFirstName($request->getPostData('firstName'));
+        $usersModel->setLastName($request->getPostData('lastName'));
+        $usersModel->setDob($request->getPostData('dob'));
         $usersModel->setDeleted(0);
         $usersModel->save();
 
@@ -42,18 +45,24 @@ class Ajax extends ControllerAjaxAbstract
 
     public function update()
     {
-        $usersModel = new Users();
-        $usersModel->setId(3);
-        $usersModel->setFirst('Katherine');
-        $usersModel->setLast('Printz');
-        $usersModel->setDob('1990-05-08');
-        $usersModel->setDeleted(0);
-        $usersModel->save();
+        $request = $this->getRequest();
 
-        $usersModel->load(3);
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
+        $updateTo = $request->getPostData('newValue');
+
+        $usersModel = new Users();
+
+        $collection = $usersModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
+        foreach ($collection as $usersItem) {
+            $usersItem->setData($filterBy, $updateTo);
+            $usersItem->save();
+        }
 
         return json_encode([
-            //todo decide what to return
+            $collection
         ]);
     }
 
@@ -71,8 +80,19 @@ class Ajax extends ControllerAjaxAbstract
 
     public function filter()
     {
-        //todo update this to use user model - user collections?
+        $request = $this->getRequest();
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
 
+        $usersModel = new Users();
+
+        $collection = $usersModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
+
+        return json_encode([
+            $collection
+        ]);
     }
 
     public function getAllData()
