@@ -147,7 +147,7 @@ function Calculator() {
             type: 'POST',
             url: '/Calculations/Ajax/add',
             data: {
-                'calculation': calcResult
+                'inputValue': calcResult
             }
         }).done(function (data, test) {
             console.log('we are done');

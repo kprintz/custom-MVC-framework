@@ -4,9 +4,7 @@ namespace Controller\Calculations;
 
 use Controller\Core\ControllerAjaxAbstract;
 use Model\Calculations\Calculations;
-use Model\Calculations\CalculationsCollections;
-use Model\Calculations\CalculationsCollectionResource;
-use Model\Calculations\CalculationsResource;
+use View\Template;
 
 /**
  * Child class for Calculations-related Ajax controller actions
@@ -16,14 +14,21 @@ use Model\Calculations\CalculationsResource;
  */
 class Ajax extends ControllerAjaxAbstract
 {
+
     public function getTableDisplay()
     {
         $calcModel= new Calculations();
+        $template = new Template();
+        $template->setData(
+            'columnNames',
+            $calcModel->getResource()->getColumnNames()
+        );
 
         return json_encode([
             'succes' => 'ajax request processed',
             'tableHeaders' => $calcModel->getResource()->getColumnNames(),
-            'rows' => $calcModel->getCollection()->getAllData()->getItems()
+            'rows' => $calcModel->getCollection()->getAllData()->getItems(),
+            'formActions' => $template->render(['View/templates/tables_form.phtml']),
         ]);
     }
 
@@ -34,12 +39,13 @@ class Ajax extends ControllerAjaxAbstract
         $calcModel = new Calculations();
         $calcModel->setIp($request->getIP());
         $calcModel->setDate($request->getDate());
-        $calcModel->setCalculation($request->getPostData('calculation'));
+        $calcModel->setCalculation($request->getPostData('inputValue'));
         $calcModel->setDeleted(0);
         $calcModel->save();
 
+        //todo decide what to return
         return json_encode([
-            //todo decide what to return
+            'allResults' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -69,11 +75,11 @@ class Ajax extends ControllerAjaxAbstract
     {
         $calcModel = new Calculations();
         $calcModel->setDeleted(1);
-        $calcModel->setId(29);
         $calcModel->save();
 
+        //todo decide what to return
         return json_encode([
-            //todo decide what to return
+            'allResults' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 

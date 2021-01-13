@@ -2,7 +2,7 @@
 /** @var $this \View\Template */
 ?>
 
-<form data-form="get-data" method="POST" class="edit-window edit-window__form" id="set-form-action">
+<form data-form="table-actions" method="POST" class="edit-window edit-window__form" id="set-form-action">
     <div class="edit-window__action">
         <label for="filter-options">What do you want to do?</label>
         <select name="filter" id="filter-options">
@@ -18,17 +18,18 @@
     <div class="edit-window__filters_options" data-visible-for="hide,update,delete,filter">
         <label for="columnName">Column Name
             <select name="columnName">
-                <option value="ip">IP</option>
-                <option value="date">Date</option>
-                <option value="calculation">Calculation</option>
+                <option value="">Select...</option>
+                <?php foreach($this->columnNames as $name): ?>
+                    <option value="<?php echo $name ?>"><?= $name ?></option>
+                <?php endforeach; ?>
             </select>
         </label>
     </div>
 
     <div class="edit-window__filters_options" data-visible-for="hide,add">
         <div class="view_delete">
-            <label for="calculation">Calculation
-                <input type="text" name="calculation">
+            <label for="inputValue">Input Value
+                <input type="text" name="inputValue">
             </label>
         </div>
     </div>

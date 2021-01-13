@@ -4,9 +4,7 @@ namespace Controller\Users;
 
 use Controller\Core\ControllerAjaxAbstract;
 use Model\Users\Users;
-use Model\Users\UsersResource;
-use Model\Users\UsersCollection;
-use Model\Users\UsersCollectionResource;
+use View\Template;
 
 /**
  * Child class for Users-related Ajax controller actions
@@ -19,11 +17,17 @@ class Ajax extends ControllerAjaxAbstract
     public function getTableDisplay()
     {
         $usersModel= new Users();
+        $template = new Template();
+        $template->setData(
+            'columnNames',
+            $usersModel->getResource()->getColumnNames()
+        );
 
         return json_encode([
             'succes' => 'ajax request processed',
             'tableHeaders' => $usersModel->getResource()->getColumnNames(),
-            'rows' => $usersModel->getCollection()->getAllData()->getItems()
+            'rows' => $usersModel->getCollection()->getAllData()->getItems(),
+            'html' => $template->render(['View/templates/tables_form.phtml'])
         ]);
     }
 
