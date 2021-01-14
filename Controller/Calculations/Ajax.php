@@ -14,7 +14,7 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-
+//todo for all - need to filter results to only display data where 'deleted' = 0
     public function getTableDisplay()
     {
         $calcModel= new Calculations();
@@ -45,9 +45,7 @@ class Ajax extends ControllerAjaxAbstract
         $calcModel->save();
 
         //todo decide what to return
-        return json_encode([
-            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
-        ]);
+        return $this->getTableDisplay();
     }
 
     public function update()
@@ -67,10 +65,7 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->save();
         }
 
-        //todo decide what to return
-        return json_encode([
-            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
-        ]);
+        return $this->getTableDisplay();
     }
 
     public function delete()
@@ -87,11 +82,7 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->setDeleted(1);
             $calcItem->save();
         }
-
-        //todo decide what to return
-        return json_encode([
-            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
-        ]);
+        return $this->getTableDisplay();
     }
 
     public function filter()
@@ -109,8 +100,10 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->save();
         }
 
-        //todo decide what to return
-        return $this->getTableDisplay();
+        return json_encode([
+            'succes' => 'ajax request processed',
+            'tableData' => $collection
+        ]);
     }
 
     public function getAllData()
@@ -119,9 +112,9 @@ class Ajax extends ControllerAjaxAbstract
 
         $collection = $calcModel->getCollection()->getAllData()->getItems();
 
-        //todo decide what to return
         return json_encode([
-            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
+            'succes' => 'ajax request processed',
+            'tableData' => $collection
         ]);
 
     }

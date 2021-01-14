@@ -65,15 +65,12 @@ function DatabaseInterface() {
 
     this.ajaxFormSubmitHandler = function(data, successState, responseObj) {
         let parsedData = JSON.parse(data);
+        //todo may want to use rows modified in a success message; currently undefined/not part of response
         let rowsUpdated = parsedData['rowsModified'];
         let tableHTML = "";
         let tableHeadersElement = jQuery('.table-headers');
-        let $tableDisplayElement = jQuery('#table-element');
 
-        $tableDisplayElement.remove();
-
-        $('#set-form-action').after(parsedData['tableDisplay']);
-
+        //todo - low priority, but could be nice to highlight the row that was added after an add request
         parsedData['tableData'].forEach(element => {
             tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
@@ -83,7 +80,6 @@ function DatabaseInterface() {
         tableHeadersElement.after(tableHTML);
         jQuery("form[data-form='table-actions']")[0].reset();
     }
-
 
     $tableSelection.on("change", this.tableDisplayHandler.bind(this));
 }
