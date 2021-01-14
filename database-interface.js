@@ -1,7 +1,6 @@
 function DatabaseInterface() {
     let self = this;
     let $tableSelection = jQuery('#table-options');
-    let $tableDisplayElement = jQuery('#table-element');
 
     this.tableDisplayHandler = function() {
         //todo clear table contents at the beginning of this function so that only one table's data is displayed
@@ -17,20 +16,27 @@ function DatabaseInterface() {
     this.ajaxTableDisplayHandler = function(data, successState, responseObj) {
         let parsedData = JSON.parse(data);
         let tableHTML = "";
-        let formElement = $('#set-form-action');
-        formElement.remove();
+        let $formElement = $('#set-form-action');
+        let $tableDisplayElement = jQuery('#table-element');
+        let $dbInterfaceElement = jQuery('#db-interface');
 
-        $tableDisplayElement.before(parsedData['formActions']);
+        $formElement.remove();
+        $tableDisplayElement.remove();
+
+        $dbInterfaceElement.after(parsedData['formActions']);
+        $('#set-form-action').after(parsedData['tableDisplay']);
+
         let $filterOption = jQuery('#filter-options');
         let $allMenus = jQuery('[data-visible-for*="hide"]');
         $allMenus.hide();
+
         $filterOption.on("change", this.displayFormActions.bind(this));
         jQuery('[data-form="table-actions"]').on('submit', this.formSubmitHandler.bind(this));
 
-        parsedData['rows'].forEach(element => {
+        parsedData['tableData'].forEach(element => {
             tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
-        //todo get table headers working
+
         jQuery('.table-headers').after(tableHTML);
     }
 
@@ -58,13 +64,17 @@ function DatabaseInterface() {
     }
 
     this.ajaxFormSubmitHandler = function(data, successState, responseObj) {
-        $tableDisplayElement.show();
         let parsedData = JSON.parse(data);
         let rowsUpdated = parsedData['rowsModified'];
         let tableHTML = "";
         let tableHeadersElement = jQuery('.table-headers');
+        let $tableDisplayElement = jQuery('#table-element');
 
-        parsedData['allResults'].forEach(element => {
+        $tableDisplayElement.remove();
+
+        $('#set-form-action').after(parsedData['tableDisplay']);
+
+        parsedData['tableData'].forEach(element => {
             tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
         });
 

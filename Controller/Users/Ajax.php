@@ -26,8 +26,9 @@ class Ajax extends ControllerAjaxAbstract
         return json_encode([
             'succes' => 'ajax request processed',
             'tableHeaders' => $usersModel->getResource()->getColumnNames(),
-            'rows' => $usersModel->getCollection()->getAllData()->getItems(),
-            'html' => $template->render(['View/templates/tables_form.phtml'])
+            'formActions' => $template->render(['View/templates/tables_form.phtml']),
+            'tableDisplay' => $template->render(['View/templates/table_display.phtml']),
+            'tableData' => $usersModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -73,7 +74,6 @@ class Ajax extends ControllerAjaxAbstract
     public function delete()
     {
         $usersModel = new Users();
-        $usersModel->setId(29);
         $usersModel->setDeleted(1);
         $usersModel->save();
 

@@ -27,8 +27,9 @@ class Ajax extends ControllerAjaxAbstract
         return json_encode([
             'succes' => 'ajax request processed',
             'tableHeaders' => $calcModel->getResource()->getColumnNames(),
-            'rows' => $calcModel->getCollection()->getAllData()->getItems(),
             'formActions' => $template->render(['View/templates/tables_form.phtml']),
+            'tableDisplay' => $template->render(['View/templates/table_display.phtml']),
+            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -45,7 +46,7 @@ class Ajax extends ControllerAjaxAbstract
 
         //todo decide what to return
         return json_encode([
-            'allResults' => $calcModel->getCollection()->getAllData()->getItems()
+            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -66,20 +67,30 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->save();
         }
 
+        //todo decide what to return
         return json_encode([
-            $collection
+            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
     public function delete()
     {
+        $request = $this->getRequest();
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
+
         $calcModel = new Calculations();
-        $calcModel->setDeleted(1);
-        $calcModel->save();
+        $collection = $calcModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
+        foreach ($collection as $calcItem) {
+            $calcItem->setDeleted(1);
+            $calcItem->save();
+        }
 
         //todo decide what to return
         return json_encode([
-            'allResults' => $calcModel->getCollection()->getAllData()->getItems()
+            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }
 
@@ -94,10 +105,12 @@ class Ajax extends ControllerAjaxAbstract
         $collection = $calcModel->getCollection()->addFilter(
             [$filterBy => $currentValue]
         )->getItems();
+        foreach ($collection as $calcItem) {
+            $calcItem->save();
+        }
 
-        return json_encode([
-            $collection
-        ]);
+        //todo decide what to return
+        return $this->getTableDisplay();
     }
 
     public function getAllData()
@@ -106,8 +119,9 @@ class Ajax extends ControllerAjaxAbstract
 
         $collection = $calcModel->getCollection()->getAllData()->getItems();
 
+        //todo decide what to return
         return json_encode([
-            $collection
+            'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
 
     }

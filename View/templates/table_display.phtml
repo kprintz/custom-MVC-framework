@@ -2,12 +2,11 @@
 /** @var $this \View\Template */
 ?>
 <div class="table-display edit-window edit-window__form" id="table-element">
-    <p>Table Display</p>
     <table>
         <tr class="table-headers">
-<!--            --><?php //foreach($this->columnNames as $name): ?>
-<!--            <th value="--><?php //echo $name ?><!--">--><?//= $name ?><!--</th>-->
-<!--            --><?php //endforeach; ?>
+            <?php foreach ($this->columnNames as $name): ?>
+                <th><?= $name ?></th>
+            <?php endforeach; ?>
         </tr>
         <tr>
             <td>

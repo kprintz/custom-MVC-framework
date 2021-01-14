@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Controller\Users;
 
 use Controller\Core\ControllerIndexAbstract;
