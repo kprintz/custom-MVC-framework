@@ -2,8 +2,8 @@
 /** @var $this \View\Template */
 ?>
 
-<form data-form="table-actions" method="POST" class="edit-window edit-window__form" id="set-form-action">
-    <div class="edit-window__action">
+<form data-form="table-actions" method="POST" class="admin" id="set-form-action">
+    <div class="admin__action">
         <label for="filter-options">What do you want to do?</label>
         <select name="filter" id="filter-options">
             <option data-show-val="" value="">Select...</option>
@@ -15,7 +15,7 @@
         </select>
     </div>
 
-    <div class="edit-window__filters_options" data-visible-for="hide,update,delete,filter">
+    <div class="admin__filters-options" data-visible-for="hide,update,delete,filter">
         <label for="columnName">Column Name
             <select name="columnName">
                 <option value="">Select...</option>
@@ -26,7 +26,7 @@
         </label>
     </div>
 
-    <div class="edit-window__filters_options" data-visible-for="hide,add">
+    <div class="admin__filters-options" data-visible-for="hide,add">
         <div class="view_delete">
             <label for="inputValue">Input Value
                 <input type="text" name="inputValue">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="edit-window__filters_options" data-visible-for="hide,delete,filter,update">
+    <div class="admin__filters-options" data-visible-for="hide,delete,filter,update">
         <div class="view_delete">
             <label for="filterValue">Data Point
                 <input type="text" name="filterValue">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="edit-window__filters_options" data-visible-for="hide,update">
+    <div class="admin__filters-options" data-visible-for="hide,update">
         <label for="newValue">New Value
             <input type="text" name="newValue">
         </label>

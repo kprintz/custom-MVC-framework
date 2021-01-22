@@ -6,7 +6,7 @@ use Model\AbstractModel;
 
 class Calculations extends AbstractModel
 {
-    protected string $table = 'Calculations';
+    public string $table = 'Calculations';
 
     //todo we can look at this together later (should auto serialize when we are asking this instantiated Class to turn into an array)
     public function __serialize(): array

@@ -10,13 +10,11 @@ class Template
         return $this;
     }
 
-    public function render(array $contents)
+    public function render()
     {
-        extract([$this]);
-        ob_start();
-        foreach ($contents as $content) {
-            include $content;
-        }
-        return ob_get_clean();
+        //todo parse relevant JSON file - and render its elements (for this controller path)
+        $viewJsonFile = file_get_contents("View/Calculations/Index/view.json");
+        $data = json_decode($viewJsonFile, true);
+        return $data['Calculations/Index']['test'];
     }
 }

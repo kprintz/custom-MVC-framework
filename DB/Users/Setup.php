@@ -11,11 +11,13 @@ class Setup extends DbConnect implements \DB\Core\DbSetupInterface
     {
         $usersModel = new Users();
         $usersResource = $usersModel->getResource();
-        $sql = 'CREATE TABLE IF NOT EXISTS ' . $usersResource->TABLE_NAME . ' ('.
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . $usersModel->table . ' ('.
             $usersResource->COL_ID . ' INT AUTO_INCREMENT PRIMARY KEY, ' .
             $usersResource->COL_FN . ' VARCHAR(50), ' .
             $usersResource->COL_LN . ' VARCHAR(50), ' .
             $usersResource->COL_DOB . ' DATE, ' .
+            $usersResource->COL_USN . ' VARCHAR(25), ' .
+            $usersResource->COL_PWD . ' VARCHAR(40), ' .
             $usersResource->COL_DELETED . ' TINYINT(1))';
 
         $stmt = $this->connect();

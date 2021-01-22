@@ -34,7 +34,9 @@ function DatabaseInterface() {
         jQuery('[data-form="table-actions"]').on('submit', this.formSubmitHandler.bind(this));
 
         parsedData['tableData'].forEach(element => {
-            tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+            if (element.deleted != 1) {
+                tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+            }
         });
 
         jQuery('.table-headers').after(tableHTML);
@@ -72,7 +74,9 @@ function DatabaseInterface() {
 
         //todo - low priority, but could be nice to highlight the row that was added after an add request
         parsedData['tableData'].forEach(element => {
-            tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+            if (element.deleted != 1) {
+                tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+            }
         });
 
         jQuery('.insert-message').html(rowsUpdated);

@@ -20,7 +20,7 @@ class Ajax extends ControllerAjaxAbstract
         $template = new Template();
         $template->setData(
             'columnNames',
-            $usersModel->getResource()->getColumnNames()
+            $usersModel->getResource()->getPublicColumnNames()
         );
 
         return json_encode([
@@ -43,15 +43,12 @@ class Ajax extends ControllerAjaxAbstract
         $usersModel->setDeleted(0);
         $usersModel->save();
 
-        return json_encode([
-            //todo decide what to return
-        ]);
+        return $this->getTableDisplay();
     }
 
     public function update()
     {
         $request = $this->getRequest();
-
         $filterBy = $request->getPostData('columnName');
         $currentValue = $request->getPostData('filterValue');
         $updateTo = $request->getPostData('newValue');
@@ -66,20 +63,25 @@ class Ajax extends ControllerAjaxAbstract
             $usersItem->save();
         }
 
-        return json_encode([
-            $collection
-        ]);
+        return $this->getTableDisplay();
     }
 
     public function delete()
     {
-        $usersModel = new Users();
-        $usersModel->setDeleted(1);
-        $usersModel->save();
+        $request = $this->getRequest();
+        $filterBy = $request->getPostData('columnName');
+        $currentValue = $request->getPostData('filterValue');
 
-        return json_encode([
-            //todo decide what to return
-        ]);
+        $usersModel = new Users();
+        $collection = $usersModel->getCollection()->addFilter(
+            [$filterBy => $currentValue]
+        )->getItems();
+        foreach ($collection as $usersItem) {
+            $usersItem->setDeleted(1);
+            $usersItem->save();
+        }
+
+        return $this->getTableDisplay();
     }
 
     public function filter()
@@ -93,15 +95,25 @@ class Ajax extends ControllerAjaxAbstract
         $collection = $usersModel->getCollection()->addFilter(
             [$filterBy => $currentValue]
         )->getItems();
+        foreach ($collection as $usersItem) {
+            $usersItem->save();
+        }
 
         return json_encode([
-            $collection
+            'succes' => 'ajax request processed',
+            'tableData' => $collection
         ]);
     }
 
     public function getAllData()
     {
-        //todo update this to use user model - user collections?
+        $usersModel = new Users();
 
+        $collection = $usersModel->getCollection()->getAllData()->getItems();
+
+        return json_encode([
+            'succes' => 'ajax request processed',
+            'tableData' => $collection
+        ]);
     }
 }

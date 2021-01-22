@@ -14,14 +14,14 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-//todo for all - need to filter results to only display data where 'deleted' = 0
+//todo for all - need to filter results to only display data where 'deleted' = 1
     public function getTableDisplay()
     {
         $calcModel= new Calculations();
         $template = new Template();
         $template->setData(
             'columnNames',
-            $calcModel->getResource()->getColumnNames()
+            $calcModel->getResource()->getPublicColumnNames()
         );
 
         return json_encode([
@@ -44,7 +44,6 @@ class Ajax extends ControllerAjaxAbstract
         $calcModel->setDeleted(0);
         $calcModel->save();
 
-        //todo decide what to return
         return $this->getTableDisplay();
     }
 
@@ -82,6 +81,7 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->setDeleted(1);
             $calcItem->save();
         }
+
         return $this->getTableDisplay();
     }
 
@@ -116,6 +116,5 @@ class Ajax extends ControllerAjaxAbstract
             'succes' => 'ajax request processed',
             'tableData' => $collection
         ]);
-
     }
 }

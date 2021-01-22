@@ -12,7 +12,7 @@ class Setup extends DbConnect implements \DB\Core\DbSetupInterface
         $calcModel = new Calculations();
         $calcResource = $calcModel->getResource();
         //todo consider changing to DATETIME - will impact how the update function works if changing the date column data
-        $sql = 'CREATE TABLE IF NOT EXISTS ' . $calcResource->TABLE_NAME . ' ('.
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . $calcModel->table . ' ('.
             $calcResource->COL_ID . ' INT AUTO_INCREMENT PRIMARY KEY, ' .
             $calcResource->COL_IP . ' CHAR(28), ' .
             $calcResource->COL_DATE . ' DATE, ' .

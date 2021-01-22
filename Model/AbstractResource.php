@@ -26,6 +26,21 @@ abstract class AbstractResource extends \DB\Core\DbConnect implements ResourceIn
     }
 
     /**
+     * @return array
+     */
+    public function getPublicColumnNames()
+    {
+        $allColumns = $this->getColumnNames();
+        if (($deleted= array_search('deleted', $allColumns)) !== false) {
+            unset($allColumns[$deleted]);
+        }
+        if (($pwd= array_search('password', $allColumns)) !== false) {
+            unset($allColumns[$pwd]);
+        }
+        return $allColumns;
+    }
+
+    /**
      * @param $sql
      * @param array $values
      * @return bool|\PDOStatement

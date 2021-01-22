@@ -1,0 +1,9 @@
+{
+  "Calculations/Index": {
+    "test": "database_interface.phtml"
+  },
+
+  "Users/Index": {
+    "test": "database_interface.phtml"
+  }
+}

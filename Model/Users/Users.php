@@ -6,7 +6,7 @@ use Model\AbstractModel;
 
 class Users extends AbstractModel
 {
-    protected string $table = 'Users';
+    public string $table = 'Users';
 
     public function setFirstName($firstName)
     {
