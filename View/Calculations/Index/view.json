@@ -1,9 +1,64 @@
 {
-  "Calculations/Index": {
-    "test": "database_interface.phtml"
+  "Header": {
+    "body": "View/templates/head.phtml"
   },
 
-  "Users/Index": {
-    "test": "database_interface.phtml"
+  "Footer": {
+    "body": "View/templates/foot.phtml"
+  },
+
+  "/": {
+    "body": "View/templates/index.phtml"
+  },
+
+  "/Homepage": {
+    "body": "View/templates/index.phtml"
+  },
+
+  "/Homepage/Index": {
+    "body": "View/templates/index.phtml"
+  },
+
+  "/Login": {
+    "body": "View/templates/login.phtml"
+  },
+
+  "/Calculations": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Calculations/Index": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Calculations/Ajax/getTableDisplay": {
+    "formActions": "View/templates/tables_form.phtml",
+    "tableDisplay": "View/templates/table_display.phtml"
+  },
+
+  "/Database": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Database/Index": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Database/Ajax/getTableDisplay": {
+    "formActions": "View/templates/tables_form.phtml",
+    "tableDisplay": "View/templates/table_display.phtml"
+  },
+
+  "/Users": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Users/Index": {
+    "body": "View/templates/database_interface.phtml"
+  },
+
+  "/Users/Ajax/getTableDisplay": {
+    "formActions": "View/templates/tables_form.phtml",
+    "tableDisplay": "View/templates/table_display.phtml"
   }
 }

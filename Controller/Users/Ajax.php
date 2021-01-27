@@ -25,11 +25,36 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'succes' => 'ajax request processed',
+            'template' => $template->render(),
             'tableHeaders' => $usersModel->getResource()->getColumnNames(),
-            'formActions' => $template->render(['View/templates/tables_form.phtml']),
-            'tableDisplay' => $template->render(['View/templates/table_display.phtml']),
             'tableData' => $usersModel->getCollection()->getAllData()->getItems()
         ]);
+    }
+
+    public function verify()
+    {
+        $request = $this->getRequest();
+        $usernameEntered = $request->getPostData('username');
+        $passwordEntered = $request->getPostData('password');
+
+        $usersModel = new Users();
+
+        $usernameExists = $usersModel->getCollection()->addFilter($usernameEntered);
+        if ($usernameExists) {
+            if ($usernameExists->getItems()['password'] == $passwordEntered) {
+                return true;
+            } else {
+                return json_encode([
+                    'response' => false,
+                    'responseMessage' => 'Password is incorrect'
+                ]);
+            }
+        } else {
+            return json_encode([
+                'response' => false,
+                'responseMessage' => 'Username is incorrect'
+            ]);
+        }
     }
 
     public function add()
@@ -37,10 +62,23 @@ class Ajax extends ControllerAjaxAbstract
         $request = $this->getRequest();
 
         $usersModel = new Users();
-        $usersModel->setFirstName($request->getPostData('firstName'));
-        $usersModel->setLastName($request->getPostData('lastName'));
+        $usersModel->setFirstName($request->getPostData('first'));
+        $usersModel->setLastName($request->getPostData('last'));
         $usersModel->setDob($request->getPostData('dob'));
+        $usersModel->setUsername($request->getPostData('username'));
+        $usersModel->setPassword($request->getPostData('password'));
         $usersModel->setDeleted(0);
+
+        $collection = $usersModel->getCollection()->addFilter(
+            ['username' => $usersModel->getUsername()]
+        )->getItems();
+        if ($collection) {
+            return json_encode([
+                'response' => false,
+                'responseMessage' => 'This username is taken. Please try a new username.'
+            ]);
+        }
+
         $usersModel->save();
 
         return $this->getTableDisplay();

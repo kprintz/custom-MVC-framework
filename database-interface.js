@@ -23,8 +23,7 @@ function DatabaseInterface() {
         $formElement.remove();
         $tableDisplayElement.remove();
 
-        $dbInterfaceElement.after(parsedData['formActions']);
-        $('#set-form-action').after(parsedData['tableDisplay']);
+        $dbInterfaceElement.after(parsedData['template']);
 
         let $filterOption = jQuery('#filter-options');
         let $allMenus = jQuery('[data-visible-for*="hide"]');
@@ -72,10 +71,11 @@ function DatabaseInterface() {
         let tableHTML = "";
         let tableHeadersElement = jQuery('.table-headers');
 
+        //todo - update this so tableData display is dynamic depending on selected table
         //todo - low priority, but could be nice to highlight the row that was added after an add request
         parsedData['tableData'].forEach(element => {
             if (element.deleted != 1) {
-                tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
+                tableHTML += "<tr><td>" + element[0] + "</td><td>" + element[1] + "</td><td>" + element[2] + "</td><td>" + element[3] + "</td></tr>";
             }
         });
 

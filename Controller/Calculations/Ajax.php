@@ -14,7 +14,6 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-//todo for all - need to filter results to only display data where 'deleted' = 1
     public function getTableDisplay()
     {
         $calcModel= new Calculations();
@@ -26,9 +25,8 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'succes' => 'ajax request processed',
+            'template' => $template->render(),
             'tableHeaders' => $calcModel->getResource()->getColumnNames(),
-            'formActions' => $template->render(['View/templates/tables_form.phtml']),
-            'tableDisplay' => $template->render(['View/templates/table_display.phtml']),
             'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }

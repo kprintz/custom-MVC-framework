@@ -1,6 +1,9 @@
 <?php
+/**
+ * @Author: katherine
+ */
 
-namespace Controller\Homepage;
+namespace Controller\Login;
 
 use Controller\Core\ControllerIndexAbstract;
 use View\Template;
