@@ -2,7 +2,8 @@
 /** @var $this \View\Template */
 ?>
 <h1 class="header">Login</h1>
-<div class="admin admin__container admin__login">
+
+<form data-form="login-form" method="POST" class="admin admin__container admin__login">
     <div class="admin__login-input">
         <label for="username">Username
             <input type="text" name="username">
@@ -13,6 +14,6 @@
             <input type="text" name="password">
         </label>
     </div>
-    <input type="submit" value="Submit" class="buttons buttons__admin buttons__login">
+    <input type="submit" value="Submit" class="buttons buttons__admin" id="login_button">
     <div class="insert-message"></div>
-</div>
+</form>

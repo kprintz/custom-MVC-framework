@@ -39,20 +39,24 @@ class Ajax extends ControllerAjaxAbstract
 
         $usersModel = new Users();
 
-        $usernameExists = $usersModel->getCollection()->addFilter($usernameEntered);
+        $usernameExists = $usersModel->getCollection()->addFilter([
+                'username' => $usernameEntered]
+        )->getItems();
         if ($usernameExists) {
-            if ($usernameExists->getItems()['password'] == $passwordEntered) {
-                return true;
+            if ($usernameExists[0]->password == $passwordEntered) {
+                return json_encode([
+                    'response' => true
+                ]);
             } else {
                 return json_encode([
                     'response' => false,
-                    'responseMessage' => 'Password is incorrect'
+                    'responseMessage' => 'Invalid Login'
                 ]);
             }
         } else {
             return json_encode([
                 'response' => false,
-                'responseMessage' => 'Username is incorrect'
+                'responseMessage' => 'Invalid Login'
             ]);
         }
     }

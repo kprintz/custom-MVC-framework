@@ -2,18 +2,19 @@
 
 namespace Controller\Database;
 
-use Controller\Core\ControllerIndexAbstract;
+use Controller\Core\ControllerAuthAbstract;
 use View\Template;
 
-class Index extends ControllerIndexAbstract
+class Index extends ControllerAuthAbstract
 {
     public function execute()
     {
-        $template = new Template;
-        return $template->render([
-            $this->HEADER,
-            'View/templates/database_interface.phtml',
-            $this->FOOTER
-        ]);
+        return $this->routeToLogin();
+    }
+
+    public function executePostLogin()
+    {
+        $template = new Template();
+        return $template->render();
     }
 }
