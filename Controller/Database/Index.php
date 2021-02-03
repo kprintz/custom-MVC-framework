@@ -14,6 +14,9 @@ class Index extends ControllerAuthAbstract
 
     public function executePostLogin()
     {
+        if (!$_SESSION || !$_SESSION['username']) {
+            return 'illegal operation';
+        }
         $template = new Template();
         return $template->render();
     }

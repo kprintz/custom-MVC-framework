@@ -2,14 +2,22 @@
 
 namespace Controller\Users;
 
-use Controller\Core\ControllerIndexAbstract;
+use Controller\Core\ControllerAuthAbstract;
 use View\Template;
 
-class Index extends ControllerIndexAbstract
+class Index extends ControllerAuthAbstract
 {
     public function execute()
     {
-        $template = new Template;
+        return $this->routeToLogin();
+    }
+
+    public function executePostLogin()
+    {
+        if (!$_SESSION || !$_SESSION['username']) {
+            return 'illegal operation';
+        }
+        $template = new Template();
         return $template->render();
     }
 }

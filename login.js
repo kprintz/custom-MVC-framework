@@ -14,7 +14,7 @@ function Login() {
         let parsedData = JSON.parse(data);
 
         if (parsedData['response']) {
-            window.location.href = '/Database/Index/executePostLogin'
+            window.location.href = '/Database/Index/executePostLogin';
         } else {
             $('.insert-message').html(parsedData['responseMessage']);
         }

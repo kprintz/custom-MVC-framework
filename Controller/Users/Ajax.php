@@ -35,7 +35,7 @@ class Ajax extends ControllerAjaxAbstract
     {
         $request = $this->getRequest();
         $usernameEntered = $request->getPostData('username');
-        $passwordEntered = $request->getPostData('password');
+        $passwordEntered = md5($request->getPostData('password'));
 
         $usersModel = new Users();
 
@@ -44,6 +44,7 @@ class Ajax extends ControllerAjaxAbstract
         )->getItems();
         if ($usernameExists) {
             if ($usernameExists[0]->password == $passwordEntered) {
+                $_SESSION['username'] = $usernameEntered;
                 return json_encode([
                     'response' => true
                 ]);
@@ -66,11 +67,18 @@ class Ajax extends ControllerAjaxAbstract
         $request = $this->getRequest();
 
         $usersModel = new Users();
-        $usersModel->setFirstName($request->getPostData('first'));
-        $usersModel->setLastName($request->getPostData('last'));
-        $usersModel->setDob($request->getPostData('dob'));
-        $usersModel->setUsername($request->getPostData('username'));
-        $usersModel->setPassword($request->getPostData('password'));
+//        $usersModel->setFirstName($request->getPostData('first'));
+//        $usersModel->setLastName($request->getPostData('last'));
+//        $usersModel->setDob($request->getPostData('dob'));
+//        $usersModel->setUsername($request->getPostData('username'));
+//        $usersModel->setPassword(md5($request->getPostData('password')));
+//        $usersModel->setDeleted(0);
+
+        $usersModel->setFirstName('katherine');
+        $usersModel->setLastName('printz');
+        $usersModel->setDob('1990-05-08');
+        $usersModel->setUsername('username');
+        $usersModel->setPassword(md5('password'));
         $usersModel->setDeleted(0);
 
         $collection = $usersModel->getCollection()->addFilter(
