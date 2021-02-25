@@ -11,6 +11,10 @@
     "body": "View/templates/index.phtml"
   },
 
+  "/Account/Index/execute": {
+    "body": "View/templates/create_account.phtml"
+  },
+
   "/Homepage": {
     "body": "View/templates/index.phtml"
   },

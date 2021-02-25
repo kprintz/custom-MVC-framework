@@ -3,17 +3,20 @@
 ?>
 <h1 class="header">Login</h1>
 
-<form data-form="login-form" method="POST" class="admin admin__container admin__login">
-    <div class="admin__login-input">
+<form data-form="login-form" method="POST" class="container container_admin">
+    <div class="container container_admin-input">
         <label for="username">Username
             <input type="text" name="username">
         </label>
     </div>
-    <div class="admin__login-input">
+    <div class="container container_admin-input">
         <label for="password">Password
             <input type="password" name="password">
         </label>
     </div>
-    <input type="submit" value="Submit" class="buttons buttons__admin" id="login_button">
+    <div class="container">
+        <input type="submit" data-event-type="login" value="Login" class="buttons buttons_admin buttons_admin-blue" id="login_button">
+        <input type="submit" data-event-type="create" value="Create" class="buttons buttons_admin buttons_admin-orange" id="create_button">
+    </div>
     <div class="insert-message"></div>
 </form>

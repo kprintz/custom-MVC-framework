@@ -1,8 +1,11 @@
 function Login() {
+    let form = $('[data-form="login-form"]');
+    let loginButton = $('#login_button');
+    let createAccountButton = $('#create_button');
 
     this.loginHandler = function (ev) {
         ev.preventDefault();
-        let formData = jQuery(ev.currentTarget).serializeArray();
+        let formData = form.serializeArray();
         jQuery.ajax({
             type: 'POST',
             url: '/Users/Ajax/verify',
@@ -19,7 +22,16 @@ function Login() {
             $('.insert-message').html(parsedData['responseMessage']);
         }
     }
-    jQuery('[data-form="login-form"]').on("submit", this.loginHandler.bind(this));
+
+    this.createAccountHandler = function (ev) {
+        ev.preventDefault();
+        //todo use ajax to move username and password to account creation page if entered on login page
+        window.location.href = '/Account/Index/execute';
+    }
+
+    //todo is there a better way to do this or should I just add more events
+    loginButton.on("click", this.loginHandler.bind(this));
+    createAccountButton.on("click", this.createAccountHandler.bind(this));
 }
 
 let login = new Login();

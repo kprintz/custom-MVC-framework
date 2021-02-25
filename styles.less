@@ -1,7 +1,7 @@
 html {
     background-color: black;
     font-family: 'Major Mono Display', monospace;
-    color: white;
+    color: #ffffff;
 }
 
 .header {
@@ -11,58 +11,86 @@ html {
     margin: 50px;
 }
 
-.calculator {
+.container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     width: 100%;
 
-    &__container {
-        background-image: linear-gradient(to right, #e8436a , #9534eb);
-        border: 5px solid white;
-        border-radius: 5%;
-        max-width: 600px;
-        height: 100vh * .75;
-        display: flex;
-        justify-content: center;
-    }
-
-    &__display {
+    &_display {
         background-image:linear-gradient(to right, #ebe8ed , #9d99a1);
         border: 3px solid white;
         border-radius: 30%;
         max-width: 500px;
         height: 200px;
-        margin: 30px;
-        display: flex;
+        margin: 30px 30px 0;
         justify-content: flex-end;
         align-items: center;
-        text-align: center;
         font-size: 4rem;
         font-weight: bold;
+    }
+
+    &_calculator {
+        flex-wrap: wrap;
+        background-image: linear-gradient(to right, #e8436a , #9534eb);
+        border: 5px solid white;
+        border-radius: 5%;
+        max-width: 600px;
+        height: 100vh * .75;
+    }
+
+    &_buttons {
+        flex-wrap: wrap;
+    }
+
+    &_admin {
+        border: 5px solid white;
+        padding: 20px 0;
+        flex-direction: column;
+        width: auto;
+        text-align: center;
+        margin: 20px 200px;
+
+        &-input {
+            margin: 5px 0;
+            font-size: 1.75rem;
+
+            &--bold {
+                font-weight: bold;
+            }
+        }
+
+        &-input--medium {
+            margin: 5px 0;
+            font-size: 1.25rem;
+        }
+
+        &-input--small {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
     }
 }
 
 .buttons {
-    display: flex;
-    justify-content: center;
-    align-content: space-around;
-    flex-wrap: wrap;
-    flex: 1 0 auto;
-    background-color: transparent;
-    color: white;
-    width: 100px;
-    height: 100px;
+    border: 3px solid white;
     border-radius: 5%;
+    box-shadow: 2px -2px white;
     font-size: 2rem;
     font-family: 'Major Mono Display', monospace;
+    background-color: transparent;
+    color: #ffffff;
 
-    &__numeric {
-        justify-content: center;
+    &_numeric {
+        width: 100px;
+        height: 100px;
         font-weight: bolder;
-        border: 3px solid white;
-        margin: 7px;
-        box-shadow: 2px -2px white;
+        margin: 0 7px;
+
+        &_operator {
+            width: 115px;
+            height: 50px;
+            margin: 15px 15px 0;
+        }
 
         &:hover {
             background-color: white;
@@ -72,86 +100,36 @@ html {
             border: none;
             cursor: pointer;
         }
-
-        &__operator {
-            width: 50px;
-            height: 50px;
-            margin: 20px;
-        }
-
     }
 
-    &__calculate {
-        display: flex;
-        justify-content: center;
-        flex: 1;
-        background-image: linear-gradient(to right, #95f0d0, #4d93f0);
-        border: 3px solid white;
-        color: #ffffff;
-        width: 350px;
-        margin: 5px 20px;
+    &_admin {
+        flex: 0;
+        min-width: 240px;
         border-radius: 3%;
-        box-shadow: 2px -2px white;
+        margin: 20px 30px 30px;
+        padding: 10px;
 
         &:hover {
-            font-weight: 900;
+            font-weight: bolder;
             box-shadow: none;
             cursor: pointer;
         }
 
-        &__clear {
+        &-blue {
+            background-image: linear-gradient(to right, #95f0d0, #4d93f0);
+        }
+
+        &-orange {
             background-image: linear-gradient(to right, #ed945c, #f06711);
         }
-    }
-    &__admin {
-        width: 150px;
-        height: 50px;
-        margin: 20px auto;
-        font-size: 1.5rem;
-        border: 3px solid white;
-        border-radius: 3%;
-        box-shadow: 2px -2px white;
-        background-image: linear-gradient(to right, #e8436a , #9534eb);
-    }
-}
 
-.admin {
-    border: 5px solid white;
-    margin: 20px;
-    padding: 20px;
-    flex-direction: column;
-
-    &__container {
-        border: 5px solid white;
-        margin: 50px;
-        padding: 25px;
-    }
-
-    &__action{
-        font-size: 1.5rem;
-        padding: 10px;
-    }
-
-    &__filters {
-        font-size: 1rem;
-        padding: 10px;
-
-        &-options {
-            font-size: 1rem;
-            padding: 5px 10px;
-        }
-    }
-
-    &__login {
-        text-align: center;
-
-        &-input {
-            padding: 15px;
-            font-size: x-large;
+        &-pink {
+            background-image: linear-gradient(to right, #e8436a , #9534eb);
         }
     }
 }
 
+//todo move these for better organization
 .table-display {
     display: flex;
     justify-content: center;

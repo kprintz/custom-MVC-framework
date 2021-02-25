@@ -24,7 +24,8 @@ class Ajax extends ControllerAjaxAbstract
         );
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'Success!',
             'template' => $template->render(),
             'tableHeaders' => $usersModel->getResource()->getColumnNames(),
             'tableData' => $usersModel->getCollection()->getAllData()->getItems()
@@ -67,18 +68,11 @@ class Ajax extends ControllerAjaxAbstract
         $request = $this->getRequest();
 
         $usersModel = new Users();
-//        $usersModel->setFirstName($request->getPostData('first'));
-//        $usersModel->setLastName($request->getPostData('last'));
-//        $usersModel->setDob($request->getPostData('dob'));
-//        $usersModel->setUsername($request->getPostData('username'));
-//        $usersModel->setPassword(md5($request->getPostData('password')));
-//        $usersModel->setDeleted(0);
-
-        $usersModel->setFirstName('katherine');
-        $usersModel->setLastName('printz');
-        $usersModel->setDob('1990-05-08');
-        $usersModel->setUsername('username');
-        $usersModel->setPassword(md5('password'));
+        $usersModel->setFirstName($request->getPostData('first'));
+        $usersModel->setLastName($request->getPostData('last'));
+        $usersModel->setDob($request->getPostData('dob'));
+        $usersModel->setUsername($request->getPostData('username'));
+        $usersModel->setPassword(md5($request->getPostData('password')));
         $usersModel->setDeleted(0);
 
         $collection = $usersModel->getCollection()->addFilter(
