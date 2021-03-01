@@ -9,6 +9,9 @@ class Index extends ControllerAuthAbstract
 {
     public function execute()
     {
+        if ($_SESSION) {
+            session_unset();
+        }
         return $this->routeToLogin();
     }
 

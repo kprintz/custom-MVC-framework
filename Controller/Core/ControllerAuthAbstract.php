@@ -12,7 +12,7 @@ abstract class ControllerAuthAbstract extends ControllerIndexAbstract
     public function routeToLogin()
     {
         $template = new Template();
-        $template->controller = "/Login";
+        $template->controller = "Login";
         return $template->render();
 
 
