@@ -12,7 +12,6 @@ class Template
 
     public function __construct()
     {
-        //todo probably don't want to set hooter and feader this way since they may not always be the same
         $this->viewFile = file_get_contents("View/view.json");
         $this->data = json_decode($this->viewFile, true);
         $this->controller = [explode('/', $_SERVER['REQUEST_URI'])][0][1];

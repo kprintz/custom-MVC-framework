@@ -3,7 +3,6 @@ function DatabaseInterface() {
     let $tableSelection = jQuery('#table-options');
 
     this.tableDisplayHandler = function() {
-        //todo clear table contents at the beginning of this function so that only one table's data is displayed
         let selection = $tableSelection.find(':selected').attr('data-table');
 
         //todo - make ajax url below dynamic
@@ -15,7 +14,6 @@ function DatabaseInterface() {
 
     this.ajaxTableDisplayHandler = function(data, successState, responseObj) {
         let parsedData = JSON.parse(data);
-        let tableHTML = "";
         let $formElement = $('#set-form-action');
         let $tableDisplayElement = jQuery('#table-element');
         let $dbInterfaceElement = jQuery('#db-interface');
@@ -32,11 +30,7 @@ function DatabaseInterface() {
         $filterOption.on("change", this.displayFormActions.bind(this));
         jQuery('[data-form="table-actions"]').on('submit', this.formSubmitHandler.bind(this));
 
-        parsedData['tableData'].forEach(element => {
-            if (element.deleted != 1) {
-                tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
-            }
-        });
+        let tableHTML = this.createTableHTML(parsedData['tableData']);
 
         jQuery('.table-headers').after(tableHTML);
     }
@@ -68,21 +62,32 @@ function DatabaseInterface() {
         let parsedData = JSON.parse(data);
         //todo may want to use rows modified in a success message; currently undefined/not part of response
         let rowsUpdated = parsedData['rowsModified'];
-        let tableHTML = "";
         let tableHeadersElement = jQuery('.table-headers');
 
-        //todo - update this so tableData display is dynamic depending on selected table
         //todo - low priority, but could be nice to highlight the row that was added after an add request
-        parsedData['tableData'].forEach(element => {
-            if (element.deleted != 1) {
-                tableHTML += "<tr><td>" + element.id + "</td><td>" + element.ip + "</td><td>" + element.date + "</td><td>" + element.calculation + "</td></tr>";
-            }
-        });
+        let tableHTML = this.createTableHTML(parsedData['tableData']);
 
         jQuery('.insert-message').html(rowsUpdated);
         tableHeadersElement.siblings().remove();
         tableHeadersElement.after(tableHTML);
         jQuery("form[data-form='table-actions']")[0].reset();
+    }
+
+    this.createTableHTML = function(data) {
+        let tableHTML = '';
+
+        for (let i = 0; i < data.length; i++) {
+            tableHTML += "<tr>";
+            if (`${data[i]['deleted']}` != 1) {
+                for (const value in data[i]) {
+                    if (`${value}` !== 'deleted' && `${value}` !== 'password') {
+                        tableHTML += "<td>" + `${data[i][value]}` + "</td>";
+                    }
+                }
+            }
+            tableHTML += "</tr>";
+        }
+        return tableHTML;
     }
 
     $tableSelection.on("change", this.tableDisplayHandler.bind(this));
