@@ -1,66 +1,19 @@
 {
-  "Header": {
-    "body": "View/templates/head.phtml"
+  "Calculations/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "TablesForm": {},
+      "Foot": {}
+    }
   },
 
-  "Footer": {
-    "Homepage": "View/templates/footer_calculator.phtml",
-    "Account": "View/templates/footer_account.phtml",
-    "Login": "View/templates/footer_db_interface.phtml",
-    "Database": "View/templates/footer_db_interface.phtml",
-    "Calculations": "View/templates/footer_db_interface.phtml",
-    "Users": "View/templates/footer_db_interface.phtml"
-  },
-
-  "/": {
-    "body": "View/templates/index.phtml"
-  },
-
-  "Account": {
-    "body": "View/templates/create_account.phtml"
-  },
-
-  "Homepage": {
-    "body": "View/templates/index.phtml"
-  },
-
-  "Login": {
-    "body": "View/templates/login.phtml"
-  },
-
-  "Calculations": {
-    "formActions": "View/templates/tables_form.phtml",
-    "tableDisplay": "View/templates/table_display.phtml"
-  },
-
-  "/Calculations/Index/executePostLogin": {
-    "body": "View/templates/database_interface.phtml"
-  },
-
-  "/Calculations/Ajax/getTableDisplay": {
-    "formActions": "View/templates/tables_form.phtml",
-    "tableDisplay": "View/templates/table_display.phtml"
-  },
-
-  "Database": {
-    "body": "View/templates/database_interface.phtml"
-  },
-
-  "/Database/Index/executePostLogin": {
-    "body": "View/templates/database_interface.phtml"
-  },
-
-  "Users": {
-    "formActions": "View/templates/tables_form.phtml",
-    "tableDisplay": "View/templates/table_display.phtml"
-  },
-
-  "/Users/Index/executePostLogin": {
-    "body": "View/templates/database_interface.phtml"
-  },
-
-  "/Users/Ajax/getTableDisplay": {
-    "formActions": "View/templates/tables_form.phtml",
-    "tableDisplay": "View/templates/table_display.phtml"
+  "Homepage/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "Homepage": {},
+      "Foot": {
+        "FootCalculator": {}
+      }
+    }
   }
 }

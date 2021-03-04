@@ -47,7 +47,8 @@ class Ajax extends ControllerAjaxAbstract
             if ($usernameExists[0]->password == $passwordEntered) {
                 $_SESSION['username'] = $usernameEntered;
                 return json_encode([
-                    'response' => true
+                    'response' => true,
+                    'responseMessage' => 'Success!'
                 ]);
             } else {
                 return json_encode([

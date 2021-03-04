@@ -1,5 +1,5 @@
 <?php
-/** @var $this \View\Template */
+/** @var $this \View\Block\TablesForm */
 ?>
 
 <form data-form="table-actions" method="POST" class="container container_admin" id="set-form-action">
@@ -19,7 +19,7 @@
         <label for="columnName">Column Name
             <select name="columnName">
                 <option value="">Select...</option>
-                <?php foreach($this->columnNames as $name): ?>
+                <?php foreach($this->getTableList() as $name): ?>
                     <option value="<?php echo $name ?>"><?= $name ?></option>
                 <?php endforeach; ?>
             </select>

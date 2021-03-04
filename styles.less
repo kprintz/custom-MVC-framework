@@ -1,3 +1,13 @@
+@grey-gradient_light: #ebe8ed;
+@grey-gradient_dark: #9d99a1;
+@pink-gradient_light: #e8436a;
+@pink-gradient_dark: #9534eb;
+@blue-gradient_light: #95f0d0;
+@blue-gradient_dark: #4d93f0;
+@orange-gradient_light: #f4be9d;
+@orange-gradient_medium: #ed945c;
+@orange-gradient_dark: #f06711;
+
 html {
     background-color: black;
     font-family: 'Major Mono Display', monospace;
@@ -6,9 +16,22 @@ html {
 
 .header {
     text-align: center;
-    color: silver;
-    font-size: 3rem;
+    color: white;
     margin: 50px;
+
+    &_main {
+        font-size: 3rem;
+    }
+
+    &_secondary {
+        font-size: 1.5rem;
+        margin: 20px;
+    }
+
+    &_tertiary {
+        margin: 15px 0;
+        font-weight: bolder;
+    }
 }
 
 .container {
@@ -17,7 +40,7 @@ html {
     width: 100%;
 
     &_display {
-        background-image:linear-gradient(to right, #ebe8ed , #9d99a1);
+        background-image:linear-gradient(to right, @grey-gradient_light , @grey-gradient_dark);
         border: 3px solid white;
         border-radius: 30%;
         max-width: 500px;
@@ -31,7 +54,7 @@ html {
 
     &_calculator {
         flex-wrap: wrap;
-        background-image: linear-gradient(to right, #e8436a , #9534eb);
+        background-image: linear-gradient(to right, @pink-gradient_light, @pink-gradient_dark);
         border: 5px solid white;
         border-radius: 5%;
         max-width: 600px;
@@ -102,7 +125,7 @@ html {
 
         &:hover {
             background-color: white;
-            color: #9534eb;
+            color: @pink-gradient_dark;
             font-weight: bolder;
             box-shadow: none;
             border: none;
@@ -112,7 +135,7 @@ html {
 
     &_admin {
         flex: 0;
-        min-width: 180px;
+        min-width: 210px;
         border-radius: 3%;
         margin: 20px 30px 30px;
         padding: 10px;
@@ -125,25 +148,43 @@ html {
         }
 
         &-blue {
-            background-image: linear-gradient(to right, #95f0d0, #4d93f0);
+            background-image: linear-gradient(to right, @blue-gradient_light, @blue-gradient_dark);
         }
 
         &-orange {
-            background-image: linear-gradient(to right, #ed945c, #f06711);
+            background-image: linear-gradient(to right, @orange-gradient_medium, @orange-gradient_dark);
         }
 
         &-pink {
-            background-image: linear-gradient(to right, #e8436a , #9534eb);
+            background-image: linear-gradient(to right, @pink-gradient_light , @pink-gradient_dark);
         }
     }
 }
 
 .menu {
-    &_options {
+    &_blue-hover {
         color: #ffffff;
         &:hover {
-            color: #95f0d0;
+            font-weight: bold;
+            background: -webkit-linear-gradient(to right, @blue-gradient_light 0%, @blue-gradient_dark 100%);
+            background: -moz-linear-gradient(to right, @blue-gradient_light 0%, @blue-gradient_dark 100%);
+            background: linear-gradient(to right, @blue-gradient_light 0%, @blue-gradient_dark 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+    }
+
+    &_orange-text {
+        font-weight: bolder;
+        background: -webkit-linear-gradient(to right, @orange-gradient_dark 0%, @orange-gradient_light 100%);
+        background: -moz-linear-gradient(to right, @orange-gradient_dark 0%, @orange-gradient_light 100%);
+        background: linear-gradient(to right, @orange-gradient_dark 0%, @orange-gradient_light 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    &_large-text {
+        font-size: 2rem;
     }
 }
 

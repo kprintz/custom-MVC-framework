@@ -12,6 +12,7 @@ abstract class ControllerAbstract
     public function __construct()
     {
         $this->request = new Request();
+        $this->router = new Router();
     }
 
     public function getRequest()

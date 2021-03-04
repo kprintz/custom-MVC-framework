@@ -21,6 +21,7 @@ class Index extends ControllerAuthAbstract
             return 'illegal operation';
         }
         $template = new Template();
+        $template->setData('username', $_SESSION['username']);
         return $template->render();
     }
 }

@@ -42,9 +42,16 @@ class Router
         $controller = $this->getFullRoute()[1];
         $method = $this->getFullRoute()[2];
         $indexRouter = '\\Controller\\' . $controllerGroup . '\\' . $controller;
-        $indexRouter = new $indexRouter;
 
-        //todo upon nothing found/valid return 404 page
-        return $indexRouter->$method();
+        if (class_exists($indexRouter)) {
+            $indexRouter = new $indexRouter;
+            //todo upon nothing found/valid return 404 page
+            return $indexRouter->$method();
+        } else {
+            $indexRouter = '\\Controller\\' . 'Error\\' . $controller;
+            $indexRouter = new $indexRouter;
+            return $indexRouter->$method();
+            // return header("HTTP/1.0 404 Not Found");
+        }
     }
 }

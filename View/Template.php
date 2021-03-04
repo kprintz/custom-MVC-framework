@@ -2,21 +2,51 @@
 
 namespace View;
 
+use Controller\Core\Router;
+use Model\Request;
+
 class Template
 {
     public $viewFile;
     public $data;
-    public $header;
-    public $footer;
-    public $controller;
+    public $request;
+    public $router;
 
     public function __construct()
     {
+        $this->request = new Request();
+        $this->router = new Router();
         $this->viewFile = file_get_contents("View/view.json");
+        //todo look into base getter/setter (returns null safely)
         $this->data = json_decode($this->viewFile, true);
-        $this->controller = [explode('/', $_SERVER['REQUEST_URI'])][0][1];
-        $this->header = $this->data['Header']['body'];
-        $this->footer = $this->data['Footer'][$this->controller];
+        $routeString = implode('/', $this->router->getFullRoute());
+        if (!array_key_exists($routeString, $this->data)) {
+            die('404');
+        } else {
+            $this->childList = $this->data[$routeString];
+        }
+    }
+
+    private function renderChildren()
+    {
+        foreach ($this->childList as $blockName => $children) {
+            $blockClass = '\\View\\Block\\'.$blockName;
+            $block = new $blockClass($children);
+            $block->render();
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getLayout()
+    {
+        return [];
+    }
+
+    public function getChildHtml()
+    {
+        return $this->getLayout();
     }
 
     public function setData($key, $data)
@@ -28,12 +58,7 @@ class Template
     public function render()
     {
         extract([$this]);
-        ob_start();
-        include $this->header;
-        foreach ($this->data[$this->controller] as $content) {
-            include $content;
-        }
-        include $this->footer;
+        $this->renderChildren();
         return ob_get_clean();
     }
 }
