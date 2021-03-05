@@ -14,24 +14,6 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-    public function getTableDisplay()
-    {
-        $usersModel= new Users();
-        $template = new Template();
-        $template->setData(
-            'columnNames',
-            $usersModel->getResource()->getPublicColumnNames()
-        );
-
-        return json_encode([
-            'response' => true,
-            'responseMessage' => 'Success!',
-            'template' => $template->render(),
-            'tableHeaders' => $usersModel->getResource()->getColumnNames(),
-            'tableData' => $usersModel->getCollection()->getAllData()->getItems()
-        ]);
-    }
-
     public function verify()
     {
         $request = $this->getRequest();

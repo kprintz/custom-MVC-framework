@@ -18,15 +18,10 @@ class Ajax extends ControllerAjaxAbstract
     {
         $calcModel= new Calculations();
         $template = new Template();
-        $template->setData(
-            'columnNames',
-            $calcModel->getResource()->getPublicColumnNames()
-        );
 
         return json_encode([
             'succes' => 'ajax request processed',
             'template' => $template->render(),
-            'tableHeaders' => $calcModel->getResource()->getColumnNames(),
             'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
     }

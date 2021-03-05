@@ -16,7 +16,6 @@ abstract class AbstractBlock
     public function __construct($children)
     {
         $this->children = $children;
-        $this->request = new Request();
         $this->router = new Router();
     }
 
@@ -27,12 +26,12 @@ abstract class AbstractBlock
 
     public function getChildHtml($forcedBlock = null)
     {
-        if ($forcedBlock && array_key_exists($forcedBlock, $this->children)) {
+        if (array_key_exists($forcedBlock, $this->children)) {
             $blockClass = '\\View\\Block\\'.$forcedBlock;
             $block = new $blockClass($this->children[$forcedBlock]);
             $block->render();
             $this->removeChild($forcedBlock);
-        } else {
+        } elseif (is_null($forcedBlock)) {
             foreach ($this->children as $blockName => $children) {
                 $blockClass = '\\View\\Block\\' . $blockName;
                 $block = new $blockClass($children);

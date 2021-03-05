@@ -9,21 +9,23 @@ class Template
 {
     public $viewFile;
     public $data;
-    public $request;
     public $router;
 
-    public function __construct()
+    public function __construct($routeString = null)
     {
-        $this->request = new Request();
         $this->router = new Router();
         $this->viewFile = file_get_contents("View/view.json");
         //todo look into base getter/setter (returns null safely)
         $this->data = json_decode($this->viewFile, true);
-        $routeString = implode('/', $this->router->getFullRoute());
-        if (!array_key_exists($routeString, $this->data)) {
+        if (!$routeString) {
+            $this->routeString = implode('/', $this->router->getFullRoute());
+        } else {
+            $this->routeString = $routeString;
+        }
+        if (!array_key_exists($this->routeString, $this->data)) {
             die('404');
         } else {
-            $this->childList = $this->data[$routeString];
+            $this->childList = $this->data[$this->routeString];
         }
     }
 
@@ -34,19 +36,6 @@ class Template
             $block = new $blockClass($children);
             $block->render();
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getLayout()
-    {
-        return [];
-    }
-
-    public function getChildHtml()
-    {
-        return $this->getLayout();
     }
 
     public function setData($key, $data)

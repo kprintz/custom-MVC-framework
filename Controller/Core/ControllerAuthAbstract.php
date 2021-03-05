@@ -11,7 +11,7 @@ abstract class ControllerAuthAbstract extends ControllerIndexAbstract
 {
     public function routeToLogin()
     {
-        $template = new Template("Login");
+        $template = new Template('Login/Index/execute');
         return $template->render();
     }
 

@@ -16,12 +16,12 @@ function DatabaseInterface() {
         let parsedData = JSON.parse(data);
         let $formElement = $('#set-form-action');
         let $tableDisplayElement = jQuery('#table-element');
-        let $dbInterfaceElement = jQuery('#db-interface');
+        let $dbDisplayElement = jQuery('#db-display');
 
         $formElement.remove();
         $tableDisplayElement.remove();
 
-        $dbInterfaceElement.after(parsedData['template']);
+        $dbDisplayElement.after(parsedData['template']);
 
         let $filterOption = jQuery('#filter-options');
         let $allMenus = jQuery('[data-visible-for*="hide"]');

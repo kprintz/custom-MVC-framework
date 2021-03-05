@@ -1,9 +1,35 @@
 {
+  "Account/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "CreateAccount": {},
+      "Foot": {
+        "FootCreateAccount": {}
+      }
+    }
+  },
+
   "Calculations/Index/execute": {
     "MainLayout": {
       "Head": {},
+      "DatabaseDisplay": {},
       "TablesForm": {},
-      "Foot": {}
+      "TablesDisplay": {},
+      "Foot": {
+        "FootDBDisplay":  {}
+      }
+    }
+  },
+
+  "Database/Index/executePostLogin": {
+    "DatabaseLayout": {
+      "Head": {},
+      "DatabaseDisplay": {},
+      "TablesForm": {},
+      "TablesDisplay": {},
+      "Foot": {
+        "FootDBDisplay": {}
+      }
     }
   },
 
@@ -13,6 +39,28 @@
       "Homepage": {},
       "Foot": {
         "FootCalculator": {}
+      }
+    }
+  },
+
+  "Login/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "Login": {},
+      "Foot": {
+        "FootLogin": {}
+      }
+    }
+  },
+
+  "Users/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "DatabaseDisplay": {},
+      "TablesForm": {},
+      "TablesDisplay": {},
+      "Foot": {
+        "FootDBDisplay":  {}
       }
     }
   }

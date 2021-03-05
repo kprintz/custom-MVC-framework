@@ -3,7 +3,7 @@
 ?>
 <h1 class="header">Edit Database</h1>
 
-<div class="container container_admin" id="db-interface">
+<div class="container container_admin" id="db-display">
 
     <div class="container_admin-input--medium container_admin-input--bold">
         <label for="table-options">Which table do you want to edit?</label>
@@ -16,6 +16,6 @@
 </div>
 
 <div class="container container_menu">
-    <div class="menu_options">You are logged in as <span class="menu_orange-text"><?php echo $this->username?></span>|</div>
+    <div class="menu_options">You are logged in as <span class="menu_orange-text"><?php echo $this->displayUsername()?></span>|</div>
     <a href="/Database/Index/execute" class="menu_blue-hover">Logout</a>
 </div>
