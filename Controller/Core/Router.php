@@ -45,7 +45,6 @@ class Router
 
         if (class_exists($indexRouter)) {
             $indexRouter = new $indexRouter;
-            //todo upon nothing found/valid return 404 page
             return $indexRouter->$method();
         } else {
             $indexRouter = '\\Controller\\' . 'Error\\' . 'Index';

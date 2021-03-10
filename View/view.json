@@ -19,6 +19,27 @@
     }
   },
 
+  "Calculations/Ajax/add": {
+    "TablesDisplay": {}
+  },
+
+  "Calculations/Ajax/delete": {
+    "TablesDisplay": {}
+  },
+
+  "Calculations/Ajax/filter": {
+    "TablesDisplay": {}
+  },
+
+  "Calculations/Ajax/update": {
+    "TablesDisplay": {}
+  },
+
+  "Calculations/Ajax/getTableDisplay": {
+    "TablesForm": {},
+    "TablesDisplay": {}
+  },
+
   "Calculations/Index/execute": {
     "MainLayout": {
       "Head": {},
@@ -29,11 +50,6 @@
         "FootDBDisplay":  {}
       }
     }
-  },
-
-  "Calculations/Ajax/getTableDisplay": {
-    "TablesForm": {},
-    "TablesDisplay": {}
   },
 
   "Database/Index/execute": {
@@ -112,8 +128,20 @@
     }
   },
 
+  "Users/Ajax/delete": {
+    "TablesDisplay": {}
+  },
+
+  "Users/Ajax/filter": {
+    "TablesDisplay": {}
+  },
+
   "Users/Ajax/getTableDisplay": {
     "TablesForm": {},
+    "TablesDisplay": {}
+  },
+
+  "Users/Ajax/update": {
     "TablesDisplay": {}
   }
 }

@@ -20,7 +20,8 @@ class Ajax extends ControllerAjaxAbstract
         $template = new Template();
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'template' => $template->render(),
             'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
@@ -94,7 +95,8 @@ class Ajax extends ControllerAjaxAbstract
         }
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }
@@ -106,7 +108,8 @@ class Ajax extends ControllerAjaxAbstract
         $collection = $calcModel->getCollection()->getAllData()->getItems();
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }

@@ -55,7 +55,7 @@ function DatabaseInterface() {
             type: 'POST',
             url: jQuery("form[data-form='table-actions']").attr('action') + $method,
             data: formData,
-        }).done(this.ajaxFormSubmitHandler);
+        }).done(this.ajaxFormSubmitHandler.bind(this));
     }
 
     this.ajaxFormSubmitHandler = function(data, successState, responseObj) {

@@ -20,7 +20,8 @@ class Ajax extends ControllerAjaxAbstract
         $template = new Template();
 
         return json_encode([
-            'response' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'template' => $template->render(),
             'tableData' => $usersModel->getCollection()->getAllData()->getItems()
         ]);
@@ -61,7 +62,6 @@ class Ajax extends ControllerAjaxAbstract
     public function add()
     {
         $request = $this->getRequest();
-        $template = new Template();
 
         $usersModel = new Users();
         $usersModel->setFirstName($request->getPostData('first'));
@@ -82,11 +82,7 @@ class Ajax extends ControllerAjaxAbstract
         } else {
             $usersModel->save();
 
-            return json_encode([
-                'response' => true,
-                'template' => $template->render(),
-                'responseMessage' => 'Success!'
-            ]);
+            return $this->getTableDisplay();
         }
     }
 
@@ -144,7 +140,8 @@ class Ajax extends ControllerAjaxAbstract
         }
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }
@@ -156,7 +153,8 @@ class Ajax extends ControllerAjaxAbstract
         $collection = $usersModel->getCollection()->getAllData()->getItems();
 
         return json_encode([
-            'succes' => 'ajax request processed',
+            'response' => true,
+            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }
