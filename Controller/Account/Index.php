@@ -15,4 +15,10 @@ class Index extends ControllerAuthAbstract
         $template = new Template;
         return $template->render();
     }
+
+    public function executePostCreation()
+    {
+        $template = new Template;
+        return $template->render();
+    }
 }

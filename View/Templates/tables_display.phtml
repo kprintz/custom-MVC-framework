@@ -4,7 +4,7 @@
 <div class="table-display container container_admin" id="table-element">
     <table class="container_table">
         <tr class="table-headers">
-            <?php foreach ($this->getColumnNames() as $name): ?>
+            <?php foreach ($this->getTableDisplay() as $name): ?>
                 <th><?= $name ?></th>
             <?php endforeach; ?>
         </tr>

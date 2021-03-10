@@ -15,9 +15,9 @@ abstract class ControllerAuthAbstract extends ControllerIndexAbstract
         return $template->render();
     }
 
-    public function routeToError()
+    public function routeToError($errorCode)
     {
-        $template = new Template("Error");
+        $template = new Template("Error/Index/execute{$errorCode}");
         return $template->render();
     }
 }

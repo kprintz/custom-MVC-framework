@@ -9,7 +9,34 @@
     }
   },
 
+  "Account/Index/executePostCreation": {
+    "MainLayout": {
+      "Head": {},
+      "Login": {},
+      "Foot": {
+        "FootLogin": {}
+      }
+    }
+  },
+
   "Calculations/Index/execute": {
+    "MainLayout": {
+      "Head": {},
+      "DatabaseDisplay": {},
+      "TablesForm": {},
+      "TablesDisplay": {},
+      "Foot": {
+        "FootDBDisplay":  {}
+      }
+    }
+  },
+
+  "Calculations/Ajax/getTableDisplay": {
+    "TablesForm": {},
+    "TablesDisplay": {}
+  },
+
+  "Database/Index/execute": {
     "MainLayout": {
       "Head": {},
       "DatabaseDisplay": {},
@@ -27,6 +54,16 @@
       "DatabaseDisplay": {},
       "TablesForm": {},
       "TablesDisplay": {},
+      "Foot": {
+        "FootDBDisplay": {}
+      }
+    }
+  },
+
+  "Error/Index/execute404": {
+    "MainLayout": {
+      "Head": {},
+      "Error404": {},
       "Foot": {
         "FootDBDisplay": {}
       }
@@ -63,5 +100,20 @@
         "FootDBDisplay":  {}
       }
     }
+  },
+
+  "Users/Ajax/add": {
+    "MainLayout": {
+      "Head": {},
+      "Login": {},
+      "Foot": {
+        "FootLogin": {}
+      }
+    }
+  },
+
+  "Users/Ajax/getTableDisplay": {
+    "TablesForm": {},
+    "TablesDisplay": {}
   }
 }

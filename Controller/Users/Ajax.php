@@ -14,6 +14,18 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
+    public function getTableDisplay()
+    {
+        $usersModel= new Users();
+        $template = new Template();
+
+        return json_encode([
+            'response' => 'ajax request processed',
+            'template' => $template->render(),
+            'tableData' => $usersModel->getCollection()->getAllData()->getItems()
+        ]);
+    }
+
     public function verify()
     {
         $request = $this->getRequest();
@@ -49,6 +61,7 @@ class Ajax extends ControllerAjaxAbstract
     public function add()
     {
         $request = $this->getRequest();
+        $template = new Template();
 
         $usersModel = new Users();
         $usersModel->setFirstName($request->getPostData('first'));
@@ -64,13 +77,17 @@ class Ajax extends ControllerAjaxAbstract
         if ($collection) {
             return json_encode([
                 'response' => false,
-                'responseMessage' => 'This username is taken. Please try a new username.'
+                'responseMessage' => 'Username already exists. Please login or try a different username.'
+            ]);
+        } else {
+            $usersModel->save();
+
+            return json_encode([
+                'response' => true,
+                'template' => $template->render(),
+                'responseMessage' => 'Success!'
             ]);
         }
-
-        $usersModel->save();
-
-        return $this->getTableDisplay();
     }
 
     public function update()

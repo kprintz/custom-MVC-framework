@@ -19,7 +19,7 @@
         <label for="columnName">Column Name
             <select name="columnName">
                 <option value="">Select...</option>
-                <?php foreach($this->getColumnNames() as $name): ?>
+                <?php foreach($this->getTableList() as $name): ?>
                     <option value="<?php echo $name ?>"><?= $name ?></option>
                 <?php endforeach; ?>
             </select>

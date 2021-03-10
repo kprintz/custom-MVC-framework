@@ -12,6 +12,6 @@ class Index extends ControllerAuthAbstract
 {
     public function execute()
     {
-        return $this->routeToError();
+        return $this->routeToError('404');
     }
 }

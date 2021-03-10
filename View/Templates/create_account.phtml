@@ -3,33 +3,36 @@
 ?>
 <h1 class="header">Create Account</h1>
 
-<form data-form="create-account-form" method="POST" class="container container_admin">
-    <div class="container container_admin-input">
-        <label for="first">First Name
-            <input type="text" name="first">
+<form data-form="create-account-form" method="POST" class="container container_form">
+    <div class="form form_row">
+        <label for="first" class="form_row-label">First Name
+            <input type="text" name="first" class="form_row-input">
         </label>
     </div>
-    <div class="container container_admin-input">
-        <label for="last">Last Name
-            <input type="text" name="last">
+    <div class="form form_row">
+        <label for="last" class="form_row-label">Last Name
+            <input type="text" name="last" class="form_row-input">
         </label>
     </div>
-    <div class="container container_admin-input">
-        <label for="dob">Date of Birth
-            <input type="text" name="dob">
+    <div class="form form_row">
+        <label for="dob" class="form_row-label">Date of Birth
+            <input type="text" name="dob" class="form_row-input">
         </label>
     </div>
-    <div class="container container_admin-input">
-        <label for="username">Username
-            <input type="text" name="username">
+    <div class="form form_row">
+        <label for="username" class="form_row-label">Username
+            <input type="text" name="username" class="form_row-input">
         </label>
     </div>
-    <div class="container container_admin-input">
-        <label for="password">Password
-            <input type="password" name="password">
+    <div class="form form_row">
+        <label for="password" class="form_row-label">Password
+            <input type="password" name="password" class="form_row-input">
         </label>
     </div>
     <div class="container">
         <input type="submit" value="Submit" class="buttons buttons_admin buttons_admin-pink">
+    </div>
+    <div class="container">
+        <div class="insert-message"></div>
     </div>
 </form>

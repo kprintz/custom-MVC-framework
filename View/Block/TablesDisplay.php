@@ -5,18 +5,16 @@
 
 namespace View\Block;
 
-use Model\Calculations\Calculations;
-use Model\Users\Users;
-
 class TablesDisplay extends AbstractBlock
 {
     protected $template = "View/Templates/tables_display.phtml";
 
-    public function getColumnNames()
+    public function getTableDisplay()
     {
         $route = implode('/', $this->router->getFullRoute());
-        $model = $route[0];
-        $model = new $model[0]();
-        return $model->getResource()->getPublicColumnNames();
+        $model = explode('/', $route)[0];
+        $tablesModel = '\\Model\\' . $model . '\\' . $model;
+        $tablesModel = new $tablesModel();
+        return $tablesModel->getResource()->getPublicColumnNames();
     }
 }

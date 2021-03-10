@@ -14,7 +14,7 @@ function CreateAccount() {
         let parsedData = JSON.parse(data);
 
         if (parsedData['response']) {
-            window.location.href = '/Database';
+            window.location.href = 'executePostCreation';
         } else {
             $('.insert-message').html(parsedData['responseMessage']);
         }

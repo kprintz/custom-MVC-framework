@@ -13,7 +13,10 @@ class TablesForm extends AbstractBlock
 
     public function getTableList()
     {
-        $calcModel= new Calculations();
-        return $calcModel->getResource()->getPublicColumnNames();
+        $route = implode('/', $this->router->getFullRoute());
+        $model = explode('/', $route)[0];
+        $tablesModel = '\\Model\\' . $model . '\\' . $model;
+        $tablesModel = new $tablesModel();
+        return $tablesModel->getResource()->getPublicColumnNames();
     }
 }

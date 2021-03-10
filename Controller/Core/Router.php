@@ -48,10 +48,9 @@ class Router
             //todo upon nothing found/valid return 404 page
             return $indexRouter->$method();
         } else {
-            $indexRouter = '\\Controller\\' . 'Error\\' . $controller;
+            $indexRouter = '\\Controller\\' . 'Error\\' . 'Index';
             $indexRouter = new $indexRouter;
             return $indexRouter->$method();
-            // return header("HTTP/1.0 404 Not Found");
         }
     }
 }
