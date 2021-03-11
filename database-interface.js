@@ -61,7 +61,7 @@ function DatabaseInterface() {
     this.ajaxFormSubmitHandler = function(data, successState, responseObj) {
         let parsedData = JSON.parse(data);
         //todo may want to use rows modified in a success message; currently undefined/not part of response
-        let rowsUpdated = parsedData['rowsModified'];
+        let rowsUpdated = parsedData['responseMessage'];
         let tableHeadersElement = jQuery('.table-headers');
 
         //todo - low priority, but could be nice to highlight the row that was added after an add request

@@ -14,14 +14,22 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-    public function getTableDisplay()
+    private $responseMessages = [
+        'add' => 'Your data was added',
+        'update' => 'Data was updated',
+        'delete' => 'The specified data has been removed',
+        null => ''
+    ];
+
+    public function getTableDisplay($action = null)
     {
         $calcModel= new Calculations();
         $template = new Template();
+        $responseMessage = $this->responseMessages[$action];
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
+            'responseMessage' => $responseMessage,
             'template' => $template->render(),
             'tableData' => $calcModel->getCollection()->getAllData()->getItems()
         ]);
@@ -30,6 +38,7 @@ class Ajax extends ControllerAjaxAbstract
     public function add()
     {
         $request = $this->getRequest();
+        $template = new Template();
 
         $calcModel = new Calculations();
         $calcModel->setIp($request->getIP());
@@ -38,7 +47,7 @@ class Ajax extends ControllerAjaxAbstract
         $calcModel->setDeleted(0);
         $calcModel->save();
 
-        return $this->getTableDisplay();
+        return $this->getTableDisplay('add');
     }
 
     public function update()
@@ -58,7 +67,7 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->save();
         }
 
-        return $this->getTableDisplay();
+        return $this->getTableDisplay('update');
     }
 
     public function delete()
@@ -76,7 +85,7 @@ class Ajax extends ControllerAjaxAbstract
             $calcItem->save();
         }
 
-        return $this->getTableDisplay();
+        return $this->getTableDisplay('delete');
     }
 
     public function filter()
@@ -96,7 +105,7 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
+            'responseMessage' => 'Displaying all data matching query',
             'tableData' => $collection
         ]);
     }
@@ -109,7 +118,6 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }

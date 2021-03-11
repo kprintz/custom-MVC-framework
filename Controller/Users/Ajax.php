@@ -14,14 +14,22 @@ use View\Template;
  */
 class Ajax extends ControllerAjaxAbstract
 {
-    public function getTableDisplay()
+    private $responseMessages = [
+        'add' => 'Your data was added',
+        'update' => 'Data was updated',
+        'delete' => 'The specified data has been removed',
+        null => ''
+    ];
+
+    public function getTableDisplay($action = null)
     {
         $usersModel= new Users();
         $template = new Template();
+        $responseMessage = $this->responseMessages[$action];
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
+            'responseMessage' => $responseMessage,
             'template' => $template->render(),
             'tableData' => $usersModel->getCollection()->getAllData()->getItems()
         ]);
@@ -82,7 +90,7 @@ class Ajax extends ControllerAjaxAbstract
         } else {
             $usersModel->save();
 
-            return $this->getTableDisplay();
+            return $this->getTableDisplay('add');
         }
     }
 
@@ -103,7 +111,7 @@ class Ajax extends ControllerAjaxAbstract
             $usersItem->save();
         }
 
-        return $this->getTableDisplay();
+        return $this->getTableDisplay('update');
     }
 
     public function delete()
@@ -121,7 +129,7 @@ class Ajax extends ControllerAjaxAbstract
             $usersItem->save();
         }
 
-        return $this->getTableDisplay();
+        return $this->getTableDisplay('delete');
     }
 
     public function filter()
@@ -141,7 +149,7 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
+            'responseMessage' => 'Displaying all data matching query',
             'tableData' => $collection
         ]);
     }
@@ -154,7 +162,6 @@ class Ajax extends ControllerAjaxAbstract
 
         return json_encode([
             'response' => true,
-            'responseMessage' => 'ajax request processed',
             'tableData' => $collection
         ]);
     }
